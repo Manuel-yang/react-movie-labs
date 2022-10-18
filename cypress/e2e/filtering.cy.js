@@ -1,4 +1,4 @@
-import { filterByGenre, filterByTitle } from "../support/e2e";
+import { filterByGenre, filterByTitle, filterByGenreAndTitle } from "../support/e2e";
 let movies; // List of Discover movies from TMDB
 
 describe("Filtering", () => {
@@ -66,10 +66,10 @@ describe("Filtering", () => {
       cy.get("#filled-search").clear().type(searchString); // Enter m in text box
       const selectedGenreId = 35;
       const selectedGenreText = "Comedy";
-      const matchingMovies2 = filterByGenre(movies, selectedGenreId);
+      const matchingMovies2 = filterByGenreAndTitle(movies, searchString, selectedGenreId);
       cy.get(".MuiCardHeader-content").should(
         "have.length",
-        1
+        matchingMovies2.length
       );
       cy.get("#genre-select").click();
       cy.get("li").contains(selectedGenreText).click();
