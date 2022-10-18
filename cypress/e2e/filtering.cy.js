@@ -53,7 +53,30 @@ describe("Filtering", () => {
       });
     });
   });
+  
   describe("Combined genre and title", () => {
-    // TODO
+    it("show movies with the selected genre and title", () => {
+      const searchString = "Hocus Pocus 2";
+      const matchingMovies = filterByTitle(movies, searchString);
+      cy.get(".MuiCardHeader-content").should(
+        "have.length",
+        matchingMovies.length
+      );
+
+      cy.get("#filled-search").clear().type(searchString); // Enter m in text box
+      const selectedGenreId = 35;
+      const selectedGenreText = "Comedy";
+      const matchingMovies2 = filterByGenre(movies, selectedGenreId);
+      cy.get(".MuiCardHeader-content").should(
+        "have.length",
+        1
+      );
+      cy.get("#genre-select").click();
+      cy.get("li").contains(selectedGenreText).click();
+      cy.get(".MuiCardHeader-content").should("have.length", 1);
+      cy.get(".MuiCardHeader-content").each(($card, index) => {
+        cy.wrap($card).find("p").contains(matchingMovies2[index].title);
+      });
+    })
   });
 });
