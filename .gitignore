@@ -5,6 +5,8 @@
 /.pnp
 .pnp.js
 cypress.env.json
+/cypress/videos
+/cypress/screenshots
 
 # testing
 /coverage
