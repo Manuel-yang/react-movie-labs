@@ -5,7 +5,7 @@ import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
 import AddToPlaylistIcon from '../components/cardIcons/addToPlaylist'
 
-const HomePage = (props) => {
+const HomePage = () => {
 
   const {  data, error, isLoading, isError }  = useQuery('upcoming', getUpcomingMovies)
 
