@@ -4,6 +4,7 @@ image: node:latest
 stages:
   - install
   - build
+  - exercise_job
   - test
 
 variables:
@@ -36,6 +37,13 @@ bundle_app:
   artifacts:
     paths:
       - build/
+
+exercise_job:
+  stage: exercise_job
+  only:
+    - main
+  script:
+    - echo "New job for exercise"
 
 e2etest:
 # Node docker image with Cypress and Chrome pre-installed
