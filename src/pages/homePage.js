@@ -49,7 +49,6 @@ const HomePage = (props) => {
             setMovies(movies.concat(newMovies.results))
             // movies = movies.concat(newMovies.results)
             // console.log(movies)
-            // console.log(movies)
          }   
     }
 
