@@ -43,7 +43,7 @@ const HomePage = (props) => {
            //滚动条到底部的条件
         if(scrollTop+windowHeight==scrollHeight){
             
-            // console.log("距顶部"+scrollTop+"可视区高度"+windowHeight+"滚动条总高度"+scrollHeight);
+            console.log("距顶部"+scrollTop+"可视区高度"+windowHeight+"滚动条总高度"+scrollHeight);
             setMoviesPage(moviesPage+1)
             let newMovies = await getMovies(moviesPage+1)
             setMovies(movies.concat(newMovies.results))

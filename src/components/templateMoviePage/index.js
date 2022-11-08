@@ -20,11 +20,13 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import MovieSite from '../movieSite'
+import { useNavigate } from "react-router-dom";
 
 
 const TemplateMoviePage = ({ movie, children }) => {
   const [movieCredits, setMovieCredits] = useState([])
   const [movieReviews, setReviews] = useState([])
+  const navigate = useNavigate();
   
   useEffect(() => {
     getCredits(movie.id).then(credits => {
@@ -44,9 +46,14 @@ const TemplateMoviePage = ({ movie, children }) => {
     getMovieImages
   );
 
+  const handelMenuSelect = (pageURL) => {
+    navigate(pageURL, { replace: true});
+    // console.log(pageURL)
+  }
 
 
-  // console.log(movieCredits.cast)
+
+  console.log(movieCredits.cast)
   
 
   // console.log(movie)
@@ -157,7 +164,6 @@ const TemplateMoviePage = ({ movie, children }) => {
             <Paper elevation={3}>
               <Stack direction="row" spacing={2}>
                 {movieCredits.cast.slice(0,9).map((movie) => (
-
                   <Card key={movie.id} style={{overflow: 'visible', margin: '1rem'}}>
                     <CardMedia
                       component="img"
@@ -174,7 +180,7 @@ const TemplateMoviePage = ({ movie, children }) => {
                       </Typography>        
                     </CardContent>
                     <CardActions>
-                      <Button style={{ width: '15rem'}}>Learn More</Button>
+                      <Button onClick={() =>handelMenuSelect(`/actor/${movie.id}`)} style={{ width: '15rem'}}>Learn More</Button>
                     </CardActions>
                   </Card>
                 ))}

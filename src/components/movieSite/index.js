@@ -103,7 +103,7 @@ return(
           <Stack spacing={1} alignItems="center">
             <div>
             {keywords.map((keyword) => (
-              <Chip style={{margin: '0.3rem'}} label={keyword.name} color="primary" />
+              <Chip key={keyword.id} style={{margin: '0.3rem'}} label={keyword.name} color="primary" />
             ))}
             </div>
           </Stack>
