@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
@@ -20,7 +20,6 @@ function changeTheFormatOfTime(date) {
 
 
 const reviewsBlock = (props) => {
-  console.log(props.reviews)
     
 
   return (
