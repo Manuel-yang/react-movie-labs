@@ -4,8 +4,9 @@ import { getActorDetails } from '../api/tmdb-api'
 import Spinner from '../components/spinner'
 import { useQuery } from "react-query";
 import Grid from "@mui/material/Grid";
-import ActorProfile from '../components/actorProfileSite'
+import ActorProfileSite from '../components/actorProfileSite'
 import Container from "@mui/material/Container";
+import AcotrProfile from '../components/actorProfile'
 const ActorPage = (props) => {
   const { id } = useParams();
   const { data: details, error, isLoading, isError } = useQuery(
@@ -26,15 +27,12 @@ const ActorPage = (props) => {
   return(
     <>
       <Container>
-        <Grid container>
-          <Grid item xs={3}>
-            <ActorProfile details={details}/>
+        <Grid container >
+          <Grid item xs={4}>
+            <ActorProfileSite details={details}/>
           </Grid>
-          <Grid item xs={6}>
-            
-          </Grid>
-          <Grid item xs={3}>
-
+          <Grid item xs={8}>
+            <AcotrProfile details={details}/>
           </Grid>
         </Grid>
       </Container>

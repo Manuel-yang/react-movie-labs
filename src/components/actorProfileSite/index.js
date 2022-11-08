@@ -2,13 +2,13 @@ import React from "react";
 import Stack from "@mui/material/Stack";
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-const ActotProfile = (data) => {
+const ActotProfileSite = (data) => {
 
   let details = data.details
-  console.log(details)
+  // console.log(details)
   return(
     <>
-      <img style={{maxWidth: '300px'}} 
+      <img style={{maxWidth: '280px'}} 
             src={`https://image.tmdb.org/t/p/w500/${details.profile_path}`} 
       />
       <Box maxWidth='300px'>
@@ -58,4 +58,4 @@ const ActotProfile = (data) => {
   )
 }
 
-export default ActotProfile;
+export default ActotProfileSite;
