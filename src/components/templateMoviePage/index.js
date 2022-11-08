@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import MovieHeader from "../headerMovie";
+import ReviewsBlock from '../reviewsBlock'
 import Grid from "@mui/material/Grid";
-import { getMovieImages } from "../../api/tmdb-api";
+import { getMovieImages, getMovieReviews } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from '../spinner'
 import Container from '@mui/material/Container';
@@ -23,6 +23,7 @@ import Paper from '@mui/material/Paper';
 
 const TemplateMoviePage = ({ movie, children }) => {
   const [movieCredits, setMovieCredits] = useState([])
+  const [movieReviews, setReviews] = useState([])
   
   useEffect(() => {
     getCredits(movie.id).then(credits => {
@@ -30,7 +31,12 @@ const TemplateMoviePage = ({ movie, children }) => {
         setMovieCredits(credits)
       }
     })
+    getMovieReviews(movie.id).then(reviews => {
+      setReviews(reviews)
+    })
   },[])
+
+  console.log(movieReviews)
 
   const { data , error, isLoading, isError } = useQuery(
     ["images", { id: movie.id }],
@@ -39,7 +45,7 @@ const TemplateMoviePage = ({ movie, children }) => {
 
 
 
-  console.log(movieCredits.cast)
+  // console.log(movieCredits.cast)
   
 
   // console.log(movie)
@@ -168,6 +174,8 @@ const TemplateMoviePage = ({ movie, children }) => {
           </Stack>
         </Paper>
       </Container>
+
+      <ReviewsBlock reviews={movieReviews}/>
 
     </>
   );
