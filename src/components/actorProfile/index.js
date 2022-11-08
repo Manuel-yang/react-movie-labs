@@ -8,10 +8,16 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
+import { useNavigate } from "react-router-dom";
 
 const ActorProfile = (data) => {
   let details = data.details
   let combinedCredits = data.combinedCredits
+  const navigate = useNavigate();
+
+  const handelMenuSelect = (pageURL) => {
+    navigate(pageURL, { replace: true});
+  }
 
 
   function CombinedCreditsBar(data) {
@@ -40,7 +46,7 @@ const ActorProfile = (data) => {
                   </Typography>        
                 </CardContent>
                 <CardActions>
-                  <Button style={{ width: '12rem'}}>Learn More</Button>
+                  <Button onClick={() => handelMenuSelect(`/movies/${movie.id}`)} style={{ width: '12rem'}}>Learn More</Button>
                 </CardActions>
               </Card>
             ))}
