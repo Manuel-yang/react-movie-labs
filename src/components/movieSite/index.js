@@ -1,4 +1,4 @@
-import React  from "react";
+import React, { useEffect, useState }  from "react";
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
@@ -8,8 +8,21 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 import GTranslateIcon from '@mui/icons-material/GTranslate';
+import { getKeywords } from '../../api/tmdb-api' 
+import Chip from '@mui/material/Chip';
 
-export default function movieSite({movie}) {
+const MovieSite = ({ movie }) => {
+  const [keywords, setKeywords] = useState([])
+
+  useEffect(() => {
+    getKeywords(movie.id).then(keywords => {
+      if (keywords) {
+        setKeywords(keywords.keywords)
+      }
+    })
+  },[])
+
+  // console.log(keywords)
 
   function formatNumber (value) {
     if (!value) {
@@ -25,7 +38,7 @@ export default function movieSite({movie}) {
     }
   }
 
-  console.log(movie)
+  console.log(keywords)
 return(
   <>
     <Box sx={{ width: '30rem', marginTop: '8rem'}}>
@@ -84,8 +97,22 @@ return(
           <p style={{marginLeft: '1rem'}}>${formatNumber(movie.budget)}</p>
         </Paper>
       </Stack>
+      <Paper style={{marginTop: '1rem'}}>
+        <Stack style={{margin:'2rem', paddingBottom: '2rem'}}>
+          <p style={{fontSize: '1.5rem', fontWeight: 'bold'}}>Keywords</p>
+          <Stack spacing={1} alignItems="center">
+            <div>
+            {keywords.map((keyword) => (
+              <Chip style={{margin: '0.3rem'}} label={keyword.name} color="primary" />
+            ))}
+            </div>
+          </Stack>
+        </Stack>
+      </Paper>
     </Box>
   </>
 )
 
 }
+
+export default MovieSite;
