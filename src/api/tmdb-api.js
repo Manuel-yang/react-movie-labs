@@ -101,3 +101,17 @@ export const getTrending = () => {
      throw error
   });
 };
+
+export const getCredits = (movie_id) => {
+  return fetch(
+    `https://api.themoviedb.org/3/movie/${movie_id}/credits?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
+  ).then((response) => {
+    if (!response.ok) {
+      throw new Error(response.json().message);
+    }
+    return response.json();
+  })
+  .catch((error) => {
+     throw error
+  });
+};

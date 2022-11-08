@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -9,6 +9,7 @@ import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews"
+import {getCredits} from '../../api/tmdb-api'
 
 
 
@@ -24,10 +25,20 @@ const chip = { margin: 0.5 };
 
 const MovieDetails = ({ movie }) => {  // Don't miss this!
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [movieCredits, setMovieCredits] = useState([])
+
+  useEffect(() => {
+    console.log(movie)
+    getCredits(movie.id).then(movie => {
+      setMovieCredits(movie)
+    })
+  },[])
+
+  console.log(movieCredits)
 
   return (
     <>
-      <Typography variant="h5" component="h3">
+      {/* <Typography variant="h5" component="h3">
         Overview
       </Typography>
 
@@ -88,7 +99,8 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
       </Fab>
       <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <MovieReviews movie={movie} />
-      </Drawer>
+      </Drawer> */}
+
       </>
   );
 };
