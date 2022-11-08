@@ -87,13 +87,11 @@ const TemplateMoviePage = ({ movie, children }) => {
             height: '600px',
           }}>
       </div>
-      <Grid container>
+      <Grid container spacing={1}>
         <Grid item xs={3}>
         </Grid>
 
         <Grid item xs={6}>
-
-          
           <Container style={{marginTop: '2rem'}}>
           <Box sx={{ width: '100%' }}>
           <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -180,7 +178,7 @@ const TemplateMoviePage = ({ movie, children }) => {
                       </Typography>        
                     </CardContent>
                     <CardActions>
-                      <Button onClick={() =>handelMenuSelect(`/actor/${movie.id}`)} style={{ width: '15rem'}}>Learn More</Button>
+                      <Button onClick={() =>handelMenuSelect(`/actor/${movie.id}`)} style={{ width: '12rem'}}>Learn More</Button>
                     </CardActions>
                   </Card>
                 ))}
