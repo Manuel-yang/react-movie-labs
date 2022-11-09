@@ -28,13 +28,13 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
   const [movieCredits, setMovieCredits] = useState([])
 
   useEffect(() => {
-    console.log(movie)
+    // console.log(movie)
     getCredits(movie.id).then(movie => {
       setMovieCredits(movie)
     })
   },[])
 
-  console.log(movieCredits)
+  // console.log(movieCredits)
 
   return (
     <>

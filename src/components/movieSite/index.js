@@ -38,7 +38,7 @@ const MovieSite = ({ movie }) => {
     }
   }
 
-  console.log(keywords)
+  // console.log(keywords)
 return(
   <>
     <Box sx={{ width: '30rem', marginTop: '8rem'}}>

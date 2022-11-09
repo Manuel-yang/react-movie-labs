@@ -25,7 +25,7 @@ const ActorProfile = (data) => {
       return
     }
     else {
-      console.log(data.combinedCredits)
+      // console.log(data.combinedCredits)
       return(
         <Paper elevation={3}>
           <Stack direction="row" spacing={2}>

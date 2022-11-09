@@ -17,7 +17,7 @@ const ActorPage = (props) => {
 
   const [combinedCredits, setCombinedCredits] = useState([])
   useEffect(() => {
-    getCombinedCredits('18918').then(data => {
+    getCombinedCredits(id).then(data => {
       if (data) {
         setCombinedCredits(data)
       }

@@ -51,9 +51,46 @@ const TemplateMoviePage = ({ movie, children }) => {
     // console.log(pageURL)
   }
 
+  const CastBar = (data) => {
+    
+    if(!data.movieCredits) {
+      return
+    }
+    else {
+      let movieCredits = data.movieCredits
+      // console.log(movieCredits)
+      
+      return(
+        <Stack direction="row" spacing={2}>
+        {movieCredits.cast.slice(0,9).map((movie) => (
+          <Card key={movie.id} style={{overflow: 'visible', margin: '1rem'}}>
+            <CardMedia
+              component="img"
+              height={300}
+              image={`https://image.tmdb.org/t/p/w500/${movie.profile_path}`}
+              alt="green iguana"
+            />
+            <CardContent>
+              <Typography style={{ fontSize: '1.5rem', fontWeight: 'bold'}} gutterBottom  component="div">
+                {movie.original_name}
+              </Typography>
+              <Typography gutterBottom  component="div">
+                {movie.character}
+              </Typography>        
+            </CardContent>
+            <CardActions>
+              <Button onClick={() =>handelMenuSelect(`/actor/${movie.id}`)} style={{ width: '12rem'}}>Learn More</Button>
+            </CardActions>
+          </Card>
+        ))}
+      </Stack>
+      )
+    }
+  }
 
 
-  console.log(movieCredits.cast)
+
+
   
 
   // console.log(movie)
@@ -160,29 +197,7 @@ const TemplateMoviePage = ({ movie, children }) => {
               Series Cast
             </Typography>
             <Paper elevation={3}>
-              <Stack direction="row" spacing={2}>
-                {movieCredits.cast.slice(0,9).map((movie) => (
-                  <Card key={movie.id} style={{overflow: 'visible', margin: '1rem'}}>
-                    <CardMedia
-                      component="img"
-                      height={300}
-                      image={`https://image.tmdb.org/t/p/w500/${movie.profile_path}`}
-                      alt="green iguana"
-                    />
-                    <CardContent>
-                      <Typography style={{ fontSize: '1.5rem', fontWeight: 'bold'}} gutterBottom  component="div">
-                        {movie.original_name}
-                      </Typography>
-                      <Typography gutterBottom  component="div">
-                        {movie.character}
-                      </Typography>        
-                    </CardContent>
-                    <CardActions>
-                      <Button onClick={() =>handelMenuSelect(`/actor/${movie.id}`)} style={{ width: '12rem'}}>Learn More</Button>
-                    </CardActions>
-                  </Card>
-                ))}
-              </Stack>
+              <CastBar movieCredits={movieCredits}/>
             </Paper>
           </Container>
 

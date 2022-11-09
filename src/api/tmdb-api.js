@@ -161,3 +161,18 @@ export const getCombinedCredits = (person_id) => {
      throw error
   });
 };
+
+
+export const searchMovieApi = (movieName) => {
+  return fetch(
+    `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1&include_adult=false&query=${movieName}`
+  ).then((response) => {
+    if (!response.ok) {
+      throw new Error(response.json().message);
+    }
+    return response.json();
+  })
+  .catch((error) => {
+     throw error
+  });
+};

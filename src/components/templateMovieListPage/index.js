@@ -9,11 +9,14 @@ import { getTrending } from '../../api/tmdb-api'
 import { useQuery } from 'react-query';
 import Spinner from '../../components/spinner';
 import Container from '@mui/material/Container';
+// import scrollRecoder from '../../pages/homePage'
 
 function MovieListPageTemplate({ movies, title, action }) {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
   const genreId = Number(genreFilter);
+
+  // console.log(scrollRecoder)
 
   const {  data, error, isLoading, isError }  = useQuery('popular', getTrending)
   if (isLoading) {

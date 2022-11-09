@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -10,7 +10,11 @@ import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from "react-router-dom";
-
+import { searchMovieApi } from '../../api/tmdb-api'
+import Paper from '@mui/material/Paper';
+import Divider from '@mui/material/Divider';
+import MenuIcon from '@mui/icons-material/Menu';
+import DirectionsIcon from '@mui/icons-material/Directions';
 
 // const drawerWidth = 240;
 
@@ -19,6 +23,7 @@ function DrawerAppBar(props) {
   const navigate = useNavigate();
   // const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [movieOnSearch, setMovieOnSearch] = useState([])
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -48,34 +53,47 @@ const menuOptions = [
       width: 'auto',
     },
   }));
+
+  let input;
+
+  const handle4change = (e) => {
+    input = e.target.value
+  }
   
-  const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }));
+  const search4movie = async () => {
+    let data = await searchMovieApi(input)
+    console.log(data.results[0])
+    handelMenuSelect(`/movies/${data.results[0].id}`)
+  }
   
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        width: '12ch',
-        '&:focus': {
-          width: '20ch',
-        },
-      },
-    },
-  }));
+  // const SearchIconWrapper = styled('div')(({ theme }) => ({
+  //   padding: theme.spacing(0, 2),
+  //   height: '100%',
+  //   position: 'absolute',
+  //   pointerEvents: 'none',
+  //   display: 'flex',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // }));
   
+  // const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  //   color: 'inherit',
+  //   '& .MuiInputBase-input': {
+  //     padding: theme.spacing(1, 1, 1, 0),
+  //     // vertical padding + font size from searchIcon
+  //     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+  //     transition: theme.transitions.create('width'),
+  //     width: '100%',
+  //     [theme.breakpoints.up('sm')]: {
+  //       width: '12ch',
+  //       '&:focus': {
+  //         width: '20ch',
+  //       },
+  //     },
+  //   },
+  // }));
+
+
 
   return (
     <Box sx={{ display: 'flex'}}>
@@ -97,7 +115,7 @@ const menuOptions = [
           >
             YanAemons
           </Typography>
-          <Search>
+          {/* <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -105,7 +123,25 @@ const menuOptions = [
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
             />
-          </Search>
+          </Search> */}
+          <Paper
+            component="form"
+            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+          >
+            <IconButton sx={{ p: '10px' }} aria-label="menu">
+              <SearchIcon />
+            </IconButton>
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="Search"
+              onChange={handle4change}
+              inputProps={{ 'aria-label': 'Search' }}
+            />
+            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+            <IconButton onClick={search4movie} color="primary" sx={{ p: '10px' }} aria-label="directions">
+              <DirectionsIcon />
+            </IconButton>
+          </Paper>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {menuOptions.map((item) => (
               <Button key={item.label} sx={{ color: '#fff' }} onClick={() => handelMenuSelect(item.path)}>
