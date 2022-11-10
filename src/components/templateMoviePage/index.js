@@ -53,13 +53,11 @@ const TemplateMoviePage = ({ movie, children }) => {
 
   const CastBar = (data) => {
     
-    if(!data.movieCredits) {
+    if(!data.movieCredits || data.movieCredits.length == 0) {
       return
     }
     else {
       let movieCredits = data.movieCredits
-      // console.log(movieCredits)
-      
       return(
         <Stack direction="row" spacing={2}>
         {movieCredits.cast.slice(0,9).map((movie) => (
