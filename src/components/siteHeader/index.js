@@ -54,16 +54,29 @@ const menuOptions = [
     },
   }));
 
-  let input;
+  let inputData;
 
   const handle4change = (e) => {
-    input = e.target.value
+    inputData = e.target.value
+  }
+
+  const click2search = async () => {
+    let data = await searchMovieApi(inputData)
+    console.log(data.results[0])
+    handelMenuSelect(`/movies/${data.results[0].id}`)
   }
   
-  const search4movie = async () => {
+  const search4movie = async (input) => {
     let data = await searchMovieApi(input)
     console.log(data.results[0])
     handelMenuSelect(`/movies/${data.results[0].id}`)
+  }
+
+  const handle4search = (e) => {
+    if(e.keyCode === 13 && e.target.value) {
+      search4movie(e.target.value)
+      console.log(e.target.value)
+    }
   }
   
   // const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -125,7 +138,6 @@ const menuOptions = [
             />
           </Search> */}
           <Paper
-            component="form"
             sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
           >
             <IconButton sx={{ p: '10px' }} aria-label="menu">
@@ -135,10 +147,10 @@ const menuOptions = [
               sx={{ ml: 1, flex: 1 }}
               placeholder="Search"
               onChange={handle4change}
-              inputProps={{ 'aria-label': 'Search' }}
+              onKeyUp={handle4search}
             />
             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-            <IconButton onClick={search4movie} color="primary" sx={{ p: '10px' }} aria-label="directions">
+            <IconButton onClick={click2search} color="primary" sx={{ p: '10px' }} aria-label="directions">
               <DirectionsIcon />
             </IconButton>
           </Paper>
