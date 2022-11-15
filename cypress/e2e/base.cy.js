@@ -1,6 +1,7 @@
 let movies; // List of movies from TMDB
 let movie; //
-let Keywords
+let Keywords;
+let Credits;
 
 function formatNumber (value) {
   if (!value) {
@@ -64,6 +65,14 @@ describe("Base tests", () => {
         .then((res) => {
           Keywords = res
         })
+
+        cy.request(
+          `https://api.themoviedb.org/3/movie/${movies[0].id}/credits?api_key=${Cypress.env("TMDB_KEY")}&language=en-US`
+        )
+        .its("body")
+        .then((res) => {
+          Credits = res
+        })
     });
     beforeEach(() => {
       cy.visit(`/movies/${movies[0].id}`);
@@ -116,6 +125,18 @@ describe("Base tests", () => {
         })
       })
     })
-    
+
+    it("displays the series cast", () => {
+      cy.get(".css-e53awj-MuiStack-root")
+      .within(() => {
+        const credits = Credits.cast.slice(0,9)
+        console.log(credits)
+        cy.get(".MuiCard-root").each(($card, index) => {
+          cy.wrap($card).contains(credits[index].name)
+          cy.wrap($card).contains(credits[index].character)
+        })
+      })
+    })
+
   });
 });
