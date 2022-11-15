@@ -1,5 +1,20 @@
 let movies; // List of movies from TMDB
 let movie; //
+let Keywords
+
+function formatNumber (value) {
+  if (!value) {
+     return 0.00
+  }
+  var newVal = value.toString()
+  var arr = newVal.split('.')
+  var intpart = arr[0].replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
+  if (arr[1]) {
+      return intpart + '.' + arr[1]
+  } else {
+      return intpart
+  }
+}
 
 describe("Base tests", () => {
   before(() => {
@@ -20,7 +35,7 @@ describe("Base tests", () => {
 
   describe("The Discover Movies page", () => {
     it("displays the page header and 20 movies", () => {
-      cy.get("h3").contains("Discover Movies");
+      cy.get("h2").contains("What is on trending");
       cy.get(".MuiCardHeader-root").should("have.length", 20);
     });
 
@@ -41,23 +56,66 @@ describe("Base tests", () => {
         .then((movieDetails) => {
           movie = movieDetails;
         });
+
+        cy.request(
+          `https://api.themoviedb.org/3/movie/${movies[0].id}/keywords?api_key=${Cypress.env("TMDB_KEY")}`
+        )
+        .its("body")
+        .then((res) => {
+          Keywords = res
+        })
     });
     beforeEach(() => {
       cy.visit(`/movies/${movies[0].id}`);
     });
     it(" displays the movie title, overview and genres and ", () => {
-      cy.get("h3").contains(movie.title);
-      cy.get("h3").contains("Overview");
-      cy.get("h3").next().contains(movie.overview);
-      cy.get("ul")
-        .eq(1)
+      cy.get("p").contains(movie.title);
+      cy.get("p").contains("Overview");
+      cy.get("p").contains(movie.overview);
+      cy.get("p").contains(movie.release_date)
+      cy.get("li")
         .within(() => {
           const genreChipLabels = movie.genres.map((g) => g.name);
-          genreChipLabels.unshift("Genres");
           cy.get("span").each(($card, index) => {
             cy.wrap($card).contains(genreChipLabels[index]);
           });
         });
     });
+
+    it(" displays the movie status, original language, Popularity, Runtime, Revenue, Budge", () => {
+      cy.get(".css-e64qdn")
+      .within(() => {
+        cy.get("p").contains(movie.status)
+        cy.get("p").contains(movie.spoken_languages[0].name)
+        cy.get("p").contains(formatNumber(movie.revenue));
+        cy.get("p").contains(movie.runtime)
+        cy.get("p").contains(movie.popularity)
+        cy.get("p").contains(formatNumber(movie.budget))
+      })
+    })
+
+    it(" displays the movie status, original language, Popularity, Runtime, Revenue, Budge", () => {
+      cy.get(".css-e64qdn")
+      .within(() => {
+        cy.get("p").contains(movie.status)
+        cy.get("p").contains(movie.spoken_languages[0].name)
+        cy.get("p").contains(formatNumber(movie.revenue));
+        cy.get("p").contains(movie.runtime)
+        cy.get("p").contains(movie.popularity)
+        cy.get("p").contains(formatNumber(movie.budget))
+      })
+    })
+
+    it(" displays the movie keywords", () => {
+      cy.get(".css-e64qdn")
+      .within(() => {
+        cy.get("p").contains("Keywords")
+        const keywords = Keywords.keywords
+        cy.get("span").each(($card, index) => {
+          cy.wrap($card).contains(keywords[index].name)
+        })
+      })
+    })
+    
   });
 });
