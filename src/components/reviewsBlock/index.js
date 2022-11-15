@@ -18,6 +18,10 @@ function changeTheFormatOfTime(date) {
   return date.slice(0,10)
 }
 
+function contentFormate(str) {
+  return str.replace(/[\r\n]/g, "")
+}
+
 
 const reviewsBlock = (props) => {
     
@@ -26,7 +30,7 @@ const reviewsBlock = (props) => {
     <>
     <Container>
         {props.reviews.map((review) => (
-          <Paper style={{marginBottom: '2rem'}} key={review.id}>
+          <Paper id="reviewPaper" style={{marginBottom: '2rem'}} key={review.id}>
             <Stack direction="row" spacing={2}>
               <Avatar sx={{ width: 56, height: 56 }} style={{margin: '1rem'}} src={checkAvatarPath(review.author_details.avatar_path)} />
               <Stack>
@@ -38,7 +42,7 @@ const reviewsBlock = (props) => {
               </Stack>
             </Stack>
             <Paper style={{padding:"2rem"}}>
-              <p>{review.content}</p>
+              <p>{contentFormate(review.content)}</p>
             </Paper>
           </Paper>
         ))}

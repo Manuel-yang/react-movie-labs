@@ -2,6 +2,7 @@ let movies; // List of movies from TMDB
 let movie; //
 let Keywords;
 let Credits;
+let Reviews;
 
 function formatNumber (value) {
   if (!value) {
@@ -73,6 +74,14 @@ describe("Base tests", () => {
         .then((res) => {
           Credits = res
         })
+
+        cy.request(
+          `https://api.themoviedb.org/3/movie/${movies[0].id}/reviews?api_key=${Cypress.env("TMDB_KEY")}&language=en-US&page=1`
+        )
+        .its("body")
+        .then((res) => {
+          Reviews = res
+        })
     });
     beforeEach(() => {
       cy.visit(`/movies/${movies[0].id}`);
@@ -130,10 +139,23 @@ describe("Base tests", () => {
       cy.get(".css-e53awj-MuiStack-root")
       .within(() => {
         const credits = Credits.cast.slice(0,9)
-        console.log(credits)
         cy.get(".MuiCard-root").each(($card, index) => {
           cy.wrap($card).contains(credits[index].name)
           cy.wrap($card).contains(credits[index].character)
+        })
+      })
+    })
+
+    it("displays the reviews about the movie", () => {
+      cy.get(".MuiContainer-root")
+      .within(() => {
+        const reviews = Reviews.results
+        cy.get("#reviewPaper").each(($card, index) => {
+          console.log(reviews[index])
+          cy.wrap($card).contains(reviews[index].author_details.username)
+          cy.wrap($card).contains(reviews[index].updated_at.substring(0,10))
+          cy.wrap($card).contains((reviews[index].content).replace(/[\r\n]/g, ""))
+
         })
       })
     })
