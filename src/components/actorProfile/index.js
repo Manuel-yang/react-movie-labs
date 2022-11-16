@@ -27,7 +27,7 @@ const ActorProfile = (data) => {
     else {
       // console.log(data.combinedCredits)
       return(
-        <Paper elevation={3}>
+        <Paper id="moviesBar" elevation={3}>
           <Stack direction="row" spacing={2}>
             {data.combinedCredits.cast.slice(0,9).map((movie) => (
               <Card key={movie.id} style={{overflow: 'visible', margin: '1rem'}}>

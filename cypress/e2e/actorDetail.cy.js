@@ -1,6 +1,7 @@
 let movies;
 let Credits;
 let CurActor;
+let CombinedCredits;
 
 function formatNumber (value) {
   if (!value) {
@@ -52,6 +53,15 @@ describe("The actor details page", () => {
       .then((res) => {
         CurActor = res
       })
+
+      
+      cy.request(
+        `https://api.themoviedb.org/3/person/${Credits[1].id}/combined_credits?api_key=${Cypress.env("TMDB_KEY")}&language=en-US`
+      )
+      .its("body")
+      .then((res) => {
+        CombinedCredits = res
+      })
       cy.visit(`/actor/${Credits[1].id}`)
     })
 
@@ -83,6 +93,16 @@ describe("The actor details page", () => {
       cy.get('p').contains(curActor.name)
       cy.get('p').contains("Biography")
       cy.get('p').contains(formatNumber(curActor.biography))
+    })
+
+    it("displays the movies that actor involved", () => {
+      let combinedCredits = CombinedCredits.cast.slice(0, 9)
+      console.log(combinedCredits)
+      cy.get("#moviesBar").within(() => {
+        cy.get(".css-e53awj-MuiStack-root").each(($card, index) => {
+          cy.wrap($card).contains(combinedCredits[index].character)
+        })
+      })
     })
   })
 })
