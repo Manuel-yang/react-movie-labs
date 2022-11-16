@@ -11,7 +11,7 @@ const ActotProfileSite = (data) => {
       <img style={{maxWidth: '280px'}} 
             src={`https://image.tmdb.org/t/p/w500/${details.profile_path}`} 
       />
-      <Box maxWidth='300px'>
+      <Box id="actorProfileSite" maxWidth='300px'>
         <Stack>
           <p style={{fontSize: '2rem', fontWeight:'bold'}}>Personal Info</p>
           <Paper>
