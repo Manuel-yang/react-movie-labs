@@ -2,6 +2,21 @@ let movies;
 let Credits;
 let CurActor;
 
+function formatNumber (value) {
+  if (!value) {
+     return 0.00
+  }
+  var newVal = value.toString()
+  var arr = newVal.split('.')
+  var intpart = arr[0].replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
+  if (arr[1]) {
+      return intpart + '.' + arr[1]
+  } else {
+      return intpart
+  }
+}
+
+
 describe("The actor details page", () => {
   before(() => {
     cy.request(
@@ -67,7 +82,7 @@ describe("The actor details page", () => {
       let curActor = CurActor
       cy.get('p').contains(curActor.name)
       cy.get('p').contains("Biography")
-      cy.get('p').contains(curActor.content)
+      cy.get('p').contains(formatNumber(curActor.biography))
     })
   })
 })
