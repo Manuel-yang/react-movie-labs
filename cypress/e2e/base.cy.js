@@ -46,7 +46,13 @@ describe("Base tests", () => {
         cy.wrap($card).find("p").contains(movies[index].title);
       });
     });
+
+    it("after scroll to the bottom of the page, it should have 40 movies", () => {
+      cy.scrollTo("bottom", { easing: 'linear' , duration: 5000})
+      cy.get(".MuiCardHeader-root").should("have.length", 40);
+    })
   });
+
   describe("The movie details page", () => {
     before(() => {
       cy.request(
