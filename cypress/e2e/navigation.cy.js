@@ -30,7 +30,18 @@ describe("Navigation", () => {
   describe("use search will navigate to the movie's deatils", () => {
     it("navigates to the movie details page through search", () => {
       cy.get("input").type("Black adam").enter()
-      cy.url().should("include", "/movies/436270")
+      cy.url().should("include", `/movies/436270`)
+    })
+  })
+
+  describe("navigation should navigate to different page", () => {
+    it("should navigate to favourite page after click favourite link", () => {
+      cy.get("button").contains("Favourites").click()
+      cy.url().should("include", `/movies/favorites`)
+      cy.get("button").contains("Home").click();
+      cy.url().should("include", `/`);
+      cy.get("button").contains("Upcoming").click();
+      cy.url().should("include", `/upcoming`);
     })
   })
   // describe("The site header", () => {
