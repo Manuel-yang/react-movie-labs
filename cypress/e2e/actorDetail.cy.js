@@ -42,26 +42,28 @@ describe("The actor details page", () => {
       .its("body")
       .then((res) => {
         Credits = res.cast.slice(0, 9)
+        cy.request(
+          `https://api.themoviedb.org/3/person/${Credits[1].id}?api_key=${Cypress.env("TMDB_KEY")}&language=en-US`
+        )
+        .its("body")
+        .then((res) => {
+          CurActor = res
+          cy.request(
+            `https://api.themoviedb.org/3/person/${Credits[1].id}/combined_credits?api_key=${Cypress.env("TMDB_KEY")}&language=en-US`
+          )
+          .its("body")
+          .then((res) => {
+            CombinedCredits = res
+          })
+        })
       })
     })
 
     beforeEach(() => {
-      cy.request(
-        `https://api.themoviedb.org/3/person/${Credits[1].id}?api_key=${Cypress.env("TMDB_KEY")}&language=en-US`
-      )
-      .its("body")
-      .then((res) => {
-        CurActor = res
-      })
+
 
       
-      cy.request(
-        `https://api.themoviedb.org/3/person/${Credits[1].id}/combined_credits?api_key=${Cypress.env("TMDB_KEY")}&language=en-US`
-      )
-      .its("body")
-      .then((res) => {
-        CombinedCredits = res
-      })
+
       cy.visit(`/actor/${Credits[1].id}`)
     })
 
