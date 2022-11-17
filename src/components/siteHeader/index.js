@@ -150,7 +150,7 @@ const menuOptions = [
               onKeyUp={handle4search}
             />
             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-            <IconButton onClick={click2search} color="primary" sx={{ p: '10px' }} aria-label="directions">
+            <IconButton id="searchIcon" onClick={click2search} color="primary" sx={{ p: '10px' }} aria-label="directions">
               <DirectionsIcon />
             </IconButton>
           </Paper>
