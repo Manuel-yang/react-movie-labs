@@ -1,18 +1,18 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import {createRoot} from 'react-dom/client';
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
-import HomePage from "./pages/homePage";
-import MoviePage from "./pages/movieDetailsPage";
-import FavoriteMoviesPage from "./pages/favoriteMoviesPage";
-import MovieReviewPage from "./pages/movieReviewPage";
-import SiteHeader from './components/siteHeader'
-import UpcomingMovies from './pages/upcomingMovies'
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
-import MoviesContextProvider from "./contexts/moviesContext";
-import MustWatchMoviesContextProvider from "./contexts/mustWatchContext";
-import AddMovieReviewPage from './pages/addMovieReviewPage'
-import ActorPage from './pages/actorPage'
+const HomePage = lazy(() => import("./pages/homePage"))
+const MoviePage = lazy(() => import("./pages/movieDetailsPage"))
+const FavoriteMoviesPage = lazy(() => import("./pages/favoriteMoviesPage"))
+const MovieReviewPage = lazy(() => import("./pages/movieReviewPage"))
+const SiteHeader = lazy(() => import('./components/siteHeader'))
+const UpcomingMovies = lazy(() => import('./pages/upcomingMovies'))
+const MoviesContextProvider = lazy(() => import("./contexts/moviesContext"))
+const MustWatchMoviesContextProvider = lazy(() => import("./contexts/mustWatchContext"))
+const AddMovieReviewPage = lazy(() => import('./pages/addMovieReviewPage'))
+const ActorPage = lazy(() => import('./pages/actorPage'))
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -117,26 +117,28 @@ const queryClient = new QueryClient({
 
 const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <SiteHeader />
-        <MoviesContextProvider>
-        <MustWatchMoviesContextProvider>
-        <Routes>
-          <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
-          <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
-          <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
-          <Route path="/movies/:id" element={<MoviePage />} />
-          <Route path="/movies/upcoming" element={<UpcomingMovies />} />
-          <Route path="/actor/:id" element={<ActorPage />} />
-          <Route path="/" element={<HomePage />} />
-          <Route path="*" element={ <Navigate to="/" /> } />
-        </Routes>
-        </MustWatchMoviesContextProvider>
-        </MoviesContextProvider>
-      </BrowserRouter>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <Suspense>    
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <SiteHeader />
+          <MoviesContextProvider>
+          <MustWatchMoviesContextProvider>
+          <Routes>
+            <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
+            <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
+            <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
+            <Route path="/movies/:id" element={<MoviePage />} />
+            <Route path="/movies/upcoming" element={<UpcomingMovies />} />
+            <Route path="/actor/:id" element={<ActorPage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="*" element={ <Navigate to="/" /> } />
+          </Routes>
+          </MustWatchMoviesContextProvider>
+          </MoviesContextProvider>
+        </BrowserRouter>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </Suspense>
   );
 };
 
