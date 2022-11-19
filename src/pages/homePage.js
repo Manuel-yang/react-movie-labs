@@ -1,18 +1,11 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, lazy, Suspense  } from "react";
 import { getMovies } from "../api/tmdb-api";
-import PageTemplate from '../components/templateMovieListPage';
-import { useQuery } from 'react-query';
-import Spinner from '../components/spinner';
-import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
-import { useLocation } from 'react-router-dom'
-const HomePage = (props) => {
-  
-  
+const PageTemplate = lazy(() => import('../components/templateMovieListPage'))
+const AddToFavoritesIcon = lazy(() => import('../components/cardIcons/addToFavorites'))
+const HomePage = () => {
   const [moviesPage, setMoviesPage] = useState(1);
-  // const { data, error, isLoading, isError }  = useQuery(['discover'], () => getMovies(moviesPage))
   global.scrollRecoder = { flag: true };
   const [movies, setMovies] = useState([])
-  let location = useLocation();
   useEffect(() => {
     getMovies(moviesPage).then(movies => {
       setMovies(movies.results)
@@ -59,13 +52,15 @@ const HomePage = (props) => {
     }
 
   return (
-    <PageTemplate
-      title="Discover Movies"
-      movies={movies}
-      action={(movie) => {
-        return <AddToFavoritesIcon movie={movie} />
-      }}
-    />
+    <Suspense>
+      <PageTemplate
+        title="Discover Movies"
+        movies={movies}
+        action={(movie) => {
+          return <AddToFavoritesIcon movie={movie} />
+        }}
+      />
+    </Suspense>
 );
 };
 export default HomePage;
