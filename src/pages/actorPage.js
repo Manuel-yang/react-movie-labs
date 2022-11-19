@@ -1,13 +1,14 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, lazy, Suspense} from "react";
 import { useParams } from 'react-router-dom';
 import { getActorDetails } from '../api/tmdb-api'
 import Spinner from '../components/spinner'
 import { useQuery } from "react-query";
 import Grid from "@mui/material/Grid";
-import ActorProfileSite from '../components/actorProfileSite'
+import { getCombinedCredits } from '../api/tmdb-api'
 import Container from "@mui/material/Container";
-import AcotrProfile from '../components/actorProfile'
-import {getCombinedCredits} from '../api/tmdb-api'
+const AcotrProfile = lazy(() => import('../components/actorProfile'))
+const ActorProfileSite = lazy(() => import('../components/actorProfileSite'))
+
 const ActorPage = (props) => {
   const { id } = useParams();
   const { data: details, error, isLoading, isError } = useQuery(
@@ -40,12 +41,14 @@ const ActorPage = (props) => {
     <>
       <Container>
         <Grid container >
-          <Grid item xs={4}>
-            <ActorProfileSite details={details}/>
-          </Grid>
-          <Grid item xs={8}>
-            <AcotrProfile details={details} combinedCredits={combinedCredits}/>
-          </Grid>
+          <Suspense>
+            <Grid item xs={4}>
+              <ActorProfileSite details={details}/>
+            </Grid>
+            <Grid item xs={8}>
+              <AcotrProfile details={details} combinedCredits={combinedCredits}/>
+            </Grid>
+          </Suspense>
         </Grid>
       </Container>
     </>
