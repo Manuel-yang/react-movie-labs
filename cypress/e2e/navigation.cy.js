@@ -34,6 +34,17 @@ describe("Navigation", () => {
     })
   })
 
+  describe("input invalid movie's name", () => {
+    it("should catch the error", () => {
+      cy.on("uncaught:exception", (err) => {
+        cy.get("input").eq(0).type("asdfasdfdas").enter()
+        if(err.message.includes('uncaught ')) {
+          throw new Error("Input invalid movie's info")
+        }
+      })
+    })
+  })
+
   describe("navigation should navigate to different page", () => {
     it("should navigate to favourite page after click favourite link", () => {
       cy.get("button").contains("Favourites").click()
