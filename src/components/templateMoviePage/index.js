@@ -23,7 +23,7 @@ import MovieSite from '../movieSite'
 import { useNavigate } from "react-router-dom";
 
 
-const TemplateMoviePage = ({ movie, children }) => {
+const TemplateMoviePage = ({ movie }) => {
   const [movieCredits, setMovieCredits] = useState([])
   const [movieReviews, setReviews] = useState([])
   const navigate = useNavigate();
@@ -37,11 +37,11 @@ const TemplateMoviePage = ({ movie, children }) => {
     getMovieReviews(movie.id).then(reviews => {
       setReviews(reviews)
     })
-  },[])
+  },[movie.id])
 
   // console.log(movie)
 
-  const { data , error, isLoading, isError } = useQuery(
+  const { error, isLoading, isError } = useQuery(
     ["images", { id: movie.id }],
     getMovieImages
   );
@@ -53,7 +53,7 @@ const TemplateMoviePage = ({ movie, children }) => {
 
   const CastBar = (data) => {
     
-    if(!data.movieCredits || data.movieCredits.length == 0) {
+    if(!data.movieCredits || data.movieCredits.length === 0) {
       return
     }
     else {
@@ -101,16 +101,16 @@ const TemplateMoviePage = ({ movie, children }) => {
   if (isError) {
     return <h1>{error.message}</h1>;
   }
-  const images = data.posters 
+  // const images = data.posters 
   const chip = { margin: 0.5 };
-  const root = {
-    display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    listStyle: "none",
-    padding: 1.5,
-    margin: 0,
-  };
+  // const root = {
+  //   display: "flex",
+  //   justifyContent: "center",
+  //   flexWrap: "wrap",
+  //   listStyle: "none",
+  //   padding: 1.5,
+  //   margin: 0,
+  // };
   return (
     <>
       {/* <MovieHeader movie={movie} /> */}

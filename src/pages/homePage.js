@@ -10,7 +10,7 @@ const HomePage = () => {
     getMovies(moviesPage).then(movies => {
       setMovies(movies.results)
     })
-  },[])
+  },[moviesPage])
   // console.log(movies)
   
 

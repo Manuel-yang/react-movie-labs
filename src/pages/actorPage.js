@@ -23,7 +23,7 @@ const ActorPage = (props) => {
         setCombinedCredits(data)
       }
     })
-  },[])
+  },[id])
 
   // console.log(combinedCredits)
 

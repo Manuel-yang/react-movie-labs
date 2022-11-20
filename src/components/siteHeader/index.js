@@ -1,4 +1,4 @@
-import  React, {useState} from 'react';
+import  React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -6,24 +6,24 @@ import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { styled, alpha } from '@mui/material/styles';
+// import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from "react-router-dom";
 import { searchMovieApi } from '../../api/tmdb-api'
 import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
-import MenuIcon from '@mui/icons-material/Menu';
+// import MenuIcon from '@mui/icons-material/Menu';
 import DirectionsIcon from '@mui/icons-material/Directions';
 
 // const drawerWidth = 240;
 
 
-function DrawerAppBar(props) {
+function DrawerAppBar() {
   const navigate = useNavigate();
   // const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [movieOnSearch, setMovieOnSearch] = useState([])
+  // const [movieOnSearch, setMovieOnSearch] = useState([])
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -39,20 +39,20 @@ const menuOptions = [
   { label: "Upcoming", path: "/movies/upcoming"},
 ]
   
-  const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto',
-    },
-  }));
+  // const Search = styled('div')(({ theme }) => ({
+  //   position: 'relative',
+  //   borderRadius: theme.shape.borderRadius,
+  //   backgroundColor: alpha(theme.palette.common.white, 0.15),
+  //   '&:hover': {
+  //     backgroundColor: alpha(theme.palette.common.white, 0.25),
+  //   },
+  //   marginLeft: 0,
+  //   width: '100%',
+  //   [theme.breakpoints.up('sm')]: {
+  //     marginLeft: theme.spacing(1),
+  //     width: 'auto',
+  //   },
+  // }));
 
   let inputData;
 

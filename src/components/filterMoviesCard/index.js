@@ -5,7 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import TextField from "@mui/material/TextField";
+// import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -42,9 +42,9 @@ export default function FilterMoviesCard(props) {
     props.onUserInput(type, value); // NEW
   };
 
-  const handleTextChange = (e, props) => {
-    handleChange(e, "name", e.target.value);
-  };
+  // const handleTextChange = (e, props) => {
+  //   handleChange(e, "name", e.target.value);
+  // };
 
   const handleGenreChange = (e) => {
     handleChange(e, "genre", e.target.value);

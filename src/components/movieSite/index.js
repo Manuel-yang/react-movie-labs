@@ -20,7 +20,7 @@ const MovieSite = ({ movie }) => {
         setKeywords(keywords.keywords)
       }
     })
-  },[])
+  },[movie.id])
 
   // console.log(keywords)
 

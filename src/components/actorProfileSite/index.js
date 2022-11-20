@@ -9,7 +9,8 @@ const ActotProfileSite = (data) => {
   return(
     <>
       <img style={{maxWidth: '280px'}} 
-            src={`https://image.tmdb.org/t/p/w500/${details.profile_path}`} 
+            src={`https://image.tmdb.org/t/p/w500/${details.profile_path}`}
+            alt="profile" 
       />
       <Box id="actorProfileSite" maxWidth='300px'>
         <Stack>
@@ -29,7 +30,7 @@ const ActotProfileSite = (data) => {
           <Paper>
             <Stack style={{padding: '0 2rem'}}>
               <p style={{fontSize: '1.3rem', fontWeight: 'bold', marginBottom: '0'}}>Gender</p>
-              <p style={{marginTop: '0'}}>{details.gender==2? 'Male': 'Female'}</p>
+              <p style={{marginTop: '0'}}>{details.gender===2? 'Male': 'Female'}</p>
             </Stack>
           </Paper>
           <Paper>
