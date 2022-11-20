@@ -54,6 +54,17 @@ e2etest:
   script:
     - echo "Run tests in headless mode"
     - npm run start:ci
+    
+
+test4component:
+# Node docker image with Cypress and Chrome pre-installed
+  image: cypress/browsers:node12.14.1-chrome85-ff81
+  stage: test
+  only:
+    - main
+  script:
+    - echo "Run tests for component"
+    - npm run start:component
 
 # build_jobX:
 #   stage: build
