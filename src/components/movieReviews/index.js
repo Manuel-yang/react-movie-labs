@@ -18,7 +18,7 @@ export default function MovieReviews({ movie }) {
       setReviews(reviews);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [movie.id]);
 
   return (
     <TableContainer component={Paper}>

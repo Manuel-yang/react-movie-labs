@@ -10,7 +10,7 @@ const HomePage = () => {
     getMovies(moviesPage).then(movies => {
       setMovies(movies.results)
     })
-  },[moviesPage])
+  },[PageTemplate])
   // console.log(movies)
   
 
@@ -39,12 +39,13 @@ const HomePage = () => {
     //变量scrollHeight是滚动条的总高度
     var scrollHeight = document.documentElement.scrollHeight||document.body.scrollHeight;
            //滚动条到底部的条件
-        if(scrollTop+windowHeight>=(scrollHeight-1000)){
-          console.log(scrollHeight)
+        if(scrollTop+windowHeight>=(scrollHeight)){
+          // console.log(scrollHeight)
           // console.log(location.pathname);
             // console.log("距顶部"+scrollTop+"可视区高度"+windowHeight+"滚动条总高度"+scrollHeight);
-            setMoviesPage(moviesPage+1)
+            setMoviesPage(moviesPage+1)      
             let newMovies = await getMovies(moviesPage+1)
+            // console.log(newMovies)
             setMovies(movies.concat(newMovies.results))
             // movies = movies.concat(newMovies.results)
             // console.log(movies)
