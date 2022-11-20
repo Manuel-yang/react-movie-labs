@@ -38,12 +38,12 @@ bundle_app:
     paths:
       - build/
 
-exercise_job:
-  stage: exercise_job
-  only:
-    - main
-  script:
-    - echo "New job for exercise"
+# exercise_job:
+#   stage: exercise_job
+#   only:
+#     - main
+#   script:
+#     - echo "New job for exercise"
 
 e2etest:
 # Node docker image with Cypress and Chrome pre-installed
