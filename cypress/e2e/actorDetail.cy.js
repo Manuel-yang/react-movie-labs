@@ -99,12 +99,19 @@ describe("The actor details page", () => {
 
     it("displays the movies that actor involved", () => {
       let combinedCredits = CombinedCredits.cast.slice(0, 9)
-      console.log(combinedCredits)
-      cy.get("#moviesBar").within(() => {
-        cy.get(".css-e53awj-MuiStack-root").each(($card, index) => {
-          cy.wrap($card).contains(combinedCredits[index].character)
+      cy.on("uncaught:exception", (err) => {
+        // console.log(combinedCredits)
+        cy.get("#moviesBar").within(() => {
+          cy.get(".css-e53awj-MuiStack-root").each(($card, index) => {
+            cy.wrap($card).contains(combinedCredits[index].character)
+          })
         })
+        if(err.message.includes("not found")) {
+          throw new Error("Invalid movie path")
+        }
       })
+      
+
     })
   })
 })
