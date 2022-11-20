@@ -29,7 +29,7 @@ describe("Navigation", () => {
 
   describe("use search will navigate to the movie's deatils", () => {
     it("navigates to the movie details page through search", () => {
-      cy.get("input").type("Black adam").enter()
+      cy.get("input").eq(0).type("Black adam").enter()
       cy.url().should("include", `/movies/436270`)
     })
   })

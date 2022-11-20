@@ -110,19 +110,7 @@ describe("Base tests", () => {
       cy.get(".css-e64qdn")
       .within(() => {
         cy.get("p").contains(movie.status)
-        cy.get("p").contains(movie.spoken_languages[0].name)
-        cy.get("p").contains(formatNumber(movie.revenue));
-        cy.get("p").contains(movie.runtime)
-        cy.get("p").contains(movie.popularity)
-        cy.get("p").contains(formatNumber(movie.budget))
-      })
-    })
-
-    it(" displays the movie status, original language, Popularity, Runtime, Revenue, Budge", () => {
-      cy.get(".css-e64qdn")
-      .within(() => {
-        cy.get("p").contains(movie.status)
-        cy.get("p").contains(movie.spoken_languages[0].name)
+        cy.get("p").contains(movie.spoken_languages[0].english_name)
         cy.get("p").contains(formatNumber(movie.revenue));
         cy.get("p").contains(movie.runtime)
         cy.get("p").contains(movie.popularity)
