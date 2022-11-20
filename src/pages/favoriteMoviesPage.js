@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
-import PageTemplate from "../components/templateMovieListPage";
+import React, { useContext, lazy, Suspense  } from "react";
 import { MoviesContext } from "../contexts/moviesContext";
 import { useQueries } from "react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from '../components/spinner'
-import RemoveFromFavorites from "../components/cardIcons/removeFromFavorites";
-import WriteReview from "../components/cardIcons/writeReview";
+const PageTemplate = lazy(() => import("../components/templateMovieListPage"))
+const RemoveFromFavorites = lazy(() => import("../components/cardIcons/removeFromFavorites"))
+const WriteReview = lazy(() => import("../components/cardIcons/writeReview"))
+
 
 const FavoriteMoviesPage = () => {
   const {favorites: movieIds } = useContext(MoviesContext);
@@ -33,18 +34,20 @@ const FavoriteMoviesPage = () => {
 
   // const toDo = () => true;
   return (
-    <PageTemplate
-      title="Favorite Movies"
-      movies={movies}
-      action={(movie) => {
-        return (
-          <>
-            <RemoveFromFavorites movie={movie} />
-            <WriteReview movie={movie} />
-          </>
-        );
-      }}
-    />
+    <Suspense>
+      <PageTemplate
+        title="Favorite Movies"
+        movies={movies}
+        action={(movie) => {
+          return (
+            <>
+              <RemoveFromFavorites movie={movie} />
+              <WriteReview movie={movie} />
+            </>
+          );
+        }}
+      />
+    </Suspense>
   );
 };
 
