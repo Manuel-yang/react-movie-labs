@@ -130,13 +130,18 @@ describe("Base tests", () => {
     })
 
     it("displays the series cast", () => {
-      cy.get(".css-e53awj-MuiStack-root")
-      .within(() => {
-        const credits = Credits.cast.slice(0,9)
-        cy.get(".MuiCard-root").each(($card, index) => {
-          cy.wrap($card).contains(credits[index].name)
-          cy.wrap($card).contains(credits[index].character)
+      cy.on("uncaught:exception", (err) => {
+        cy.get(".css-e53awj-MuiStack-root")
+        .within(() => {
+          const credits = Credits.cast.slice(0,9)
+          cy.get(".MuiCard-root").each(($card, index) => {
+            cy.wrap($card).contains(credits[index].name)
+            cy.wrap($card).contains(credits[index].character)
+          })
         })
+        if(err.message.includes("not found")) {
+          throw new Error("Invalid image")
+        }
       })
     })
 
