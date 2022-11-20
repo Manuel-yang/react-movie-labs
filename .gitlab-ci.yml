@@ -4,7 +4,7 @@ image: node:latest
 stages:
   - install
   - build
-  - exercise_job
+  # - exercise_job
   - test
 
 variables:
