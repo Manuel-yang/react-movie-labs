@@ -7,10 +7,14 @@ const HomePage = () => {
   global.scrollRecoder = { flag: true };
   const [movies, setMovies] = useState([])
   useEffect(() => {
-    getMovies(moviesPage).then(movies => {
-      setMovies(movies.results)
-    })
-  },[PageTemplate])
+    if(moviesPage <= 1) {
+      getMovies(moviesPage).then(movies => {
+        setMovies(movies.results)
+
+      })
+    }
+
+  },[moviesPage])
   // console.log(movies)
   
 
