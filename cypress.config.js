@@ -26,5 +26,6 @@ module.exports = defineConfig({
       framework: "create-react-app",
       bundler: "webpack",
     },
+    specPattern: 'cypress/component/*.cy.{js,jsx,ts,tsx}'
   },
 });
