@@ -28,7 +28,7 @@ describe('siteHeader.cy.js', () => {
       .click()
   })
 
-  it("click home button", () => {
+  it("click favourites button", () => {
     cy.mount(
       <BrowserRouter>
         <SiteHeader/>
@@ -36,7 +36,7 @@ describe('siteHeader.cy.js', () => {
     cy.get("button").contains("Favourites").click();
   })
 
-  it("click home button", () => {
+  it("click upcoming button", () => {
     cy.mount(
       <BrowserRouter>
         <SiteHeader/>

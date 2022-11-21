@@ -107,7 +107,7 @@ describe("The actor details page", () => {
           })
         })
         if(err.message.includes("not found")) {
-          console.log('asdfasd')
+          // console.log('asdfasd')
           throw new Error("Invalid movie path")
         }
       })
