@@ -1,3 +1,6 @@
+import axios from 'axios';
+const requester = axios.create({ baseURL: process.env.REACT_APP_BASE_URL, timeout: 1000,})
+
 export const getMovies = (page) => {
   // page = 1
   return fetch(
@@ -62,6 +65,7 @@ export const getMovieImages = ({ queryKey }) => {
     throw error
  });
 };
+
 
 export const getMovieReviews = (id) => {
   return fetch(
@@ -176,3 +180,10 @@ export const searchMovieApi = (movieName) => {
      throw error
   });
 };
+
+export const userRegister = async (username, password, email) => {
+  console.log(process.env.REACT_APP_BASE_URL)
+  await requester.post("users?action=register", {username, password, email}).then(function (response) {
+    console.log(response);
+  })
+}

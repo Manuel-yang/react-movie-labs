@@ -6,16 +6,13 @@ import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-// import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from "react-router-dom";
-import { searchMovieApi } from '../../api/tmdb-api'
+import { searchMovieApi, userRegister } from '../../api/tmdb-api'
 import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
-// import MenuIcon from '@mui/icons-material/Menu';
 import DirectionsIcon from '@mui/icons-material/Directions';
-
 import ButtonGroup from '@mui/material/ButtonGroup';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
@@ -29,7 +26,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-// const drawerWidth = 240;
 
 
 function DrawerAppBar() {
@@ -59,14 +55,12 @@ function DrawerAppBar() {
     setOpen4Login(true);
   };
 
-  const handleSubmit4SignUp = () => {
+  const handleSubmit4SignUp =  async () => {
     const username = document.getElementById("username4SignUp").value
     const password = document.getElementById("password4SignUp").value
     const email = document.getElementById("email4SignUp").value
     if(username && password && email) {
-      console.log(username)
-      console.log(password)
-      console.log(email)
+      await userRegister(username, password, email)
       setOpen4SignUp(false);
     }
   };
