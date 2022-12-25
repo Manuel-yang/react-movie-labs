@@ -13,6 +13,7 @@ const MoviesContextProvider = lazy(() => import("./contexts/moviesContext"))
 const MustWatchMoviesContextProvider = lazy(() => import("./contexts/mustWatchContext"))
 const AddMovieReviewPage = lazy(() => import('./pages/addMovieReviewPage'))
 const ActorPage = lazy(() => import('./pages/actorPage'))
+const UserInfo = lazy(() => import('./pages/userInfo'))
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -124,6 +125,7 @@ const App = () => {
           <MoviesContextProvider>
           <MustWatchMoviesContextProvider>
           <Routes>
+            <Route path="/userInfo" element={ <UserInfo /> } />
             <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
             <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
             <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />

@@ -94,6 +94,7 @@ function DrawerAppBar() {
         if(result.data.token) {
           setToken(result.data.token);
           setIsAuthenticated(true);
+          localStorage.setItem("username", username)
           setUserName(username)
           setOpen4Login(false);
         }
@@ -108,6 +109,7 @@ function DrawerAppBar() {
     setToken("")
     setIsAuthenticated(false)
     setUserName("")
+    localStorage.setItem("username", '')
   }
 
   const handleClose4SignUp = () => {
@@ -154,11 +156,20 @@ const menuOptions = [
 
 
   const handleMenuItemClick = (event, index) => {
+    console.log(index)
     if(index === 0) {
       handleClickOpen4SignUp()
     }
     else if(index === 1) {
       handleClickOpen4Login()
+    }
+    else if(index === 2) {
+      setOpen(false);
+      handelMenuSelect("/userInfo")
+    }
+    else if(index === 3) {
+      userLogOut()
+      handelMenuSelect("/")
     }
     setOpen(false);
   };
@@ -230,7 +241,7 @@ const menuOptions = [
                 onClick={handleToggle}
               >
                 <AccountCircleIcon />
-                <p style={{ margin: "0.5rem"}}>{userName ? userName : ''}</p>
+                <p style={{ margin: "0.5rem"}}>{localStorage.getItem('username') ? localStorage.getItem('username') : ''}</p>
               </Button>
             </ButtonGroup>
             <Popper
@@ -254,13 +265,18 @@ const menuOptions = [
                   <Paper>
                     <ClickAwayListener onClickAway={handleClose}>
                       <MenuList id="split-button-menu" autoFocusItem>
-                        {userName ? <MenuItem onClick={userLogOut}>Log out</MenuItem> : options.map((option, index) => (
-                          <MenuItem
-                            key={option}
-                            onClick={(event) => handleMenuItemClick(event, index)}
-                          >
-                            {option}
-                          </MenuItem>
+                        {localStorage.getItem('username') ? 
+                          <div>
+                          <MenuItem onClick={(event) => handleMenuItemClick(event, 2)}>Account info</MenuItem> 
+                          <MenuItem onClick={(event) => handleMenuItemClick(event, 3)}>Log out</MenuItem> 
+                          </div>: 
+                          options.map((option, index) => (
+                            <MenuItem
+                              key={option}
+                              onClick={(event) => handleMenuItemClick(event, index)}
+                            >
+                              {option}
+                            </MenuItem>
                         ))}
                       </MenuList>
                     </ClickAwayListener>
