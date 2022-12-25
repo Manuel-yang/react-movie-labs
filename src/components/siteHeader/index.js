@@ -26,6 +26,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 
 function DrawerAppBar() {
@@ -36,6 +38,8 @@ function DrawerAppBar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authToken, setAuthToken] = useState(existingToken);
   const [userName, setUserName] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  
 
     //Function to put JWT token in local storage.
     const setToken = (data) => {
@@ -56,10 +60,12 @@ function DrawerAppBar() {
   const [open4Login, setOpen4Login] = React.useState(false);
 
   const handleClickOpen4SignUp = () => {
+    setErrMsg("")
     setOpen4SignUp(true);
   };
 
   const handleClickOpen4Login = () => {
+    setErrMsg("")
     setOpen4Login(true);
   };
 
@@ -68,8 +74,14 @@ function DrawerAppBar() {
     const password = document.getElementById("password4SignUp").value
     const email = document.getElementById("email4SignUp").value
     if(username && password && email) {
-      await userRegister(username, password, email)
-      setOpen4SignUp(false);
+      try {
+        await userRegister(username, password, email)
+        setOpen4SignUp(false);
+      } catch (error){
+        setErrMsg(error.response.data.msg)
+      }
+      
+      
     }
   };
 
@@ -77,14 +89,18 @@ function DrawerAppBar() {
     const username = document.getElementById("username4Login").value
     const password = document.getElementById("password4Login").value
     if(username && password) {
-      let result = await userLogin(username, password)
-      if(result.data.token) {
-        console.log(result.data.token)
-        setToken(result.data.token);
-        setIsAuthenticated(true);
-        setUserName(username)
+      try {
+        let result = await userLogin(username, password)
+        if(result.data.token) {
+          setToken(result.data.token);
+          setIsAuthenticated(true);
+          setUserName(username)
+          setOpen4Login(false);
+        }
+      } catch (error) {
+        console.log(error.response.data.msg)
+        setErrMsg(error.response.data.msg)
       }
-      setOpen4Login(false);
     }
   };
 
@@ -118,13 +134,11 @@ const menuOptions = [
 
   const click2search = async () => {
     let data = await searchMovieApi(inputData)
-    console.log(data.results[0])
     handelMenuSelect(`/movies/${data.results[0].id}`)
   }
   
   const search4movie = async (input) => {
     let data = await searchMovieApi(input)
-    console.log(data.results[0])
     handelMenuSelect(`/movies/${data.results[0].id}`)
   }
 
@@ -291,6 +305,9 @@ const menuOptions = [
               variant="standard"
             />
           </DialogContent>
+          <Stack sx={{ width: '100%' }} spacing={2}> 
+            {errMsg ? <Alert severity="error">{errMsg}</Alert> : ""}
+          </Stack>
           <DialogActions>
             <Button onClick={handleClose4SignUp}>Cancel</Button>
             <Button onClick={handleSubmit4SignUp}>Subscribe</Button>
@@ -322,6 +339,9 @@ const menuOptions = [
               variant="standard"
             />
           </DialogContent>
+          <Stack sx={{ width: '100%' }} spacing={2}> 
+            {errMsg ? <Alert severity="error">{errMsg}</Alert> : ""}
+          </Stack>
           <DialogActions>
             <Button onClick={handleClose4Login}>Cancel</Button>
             <Button onClick={handleSubmit4Login}>Subscribe</Button>
