@@ -290,17 +290,17 @@ const menuOptions = [
             />
             <TextField
               margin="dense"
-              id="password4SignUp"
-              label="Password"
-              type="password"
+              id="email4SignUp"
+              label="Email Address"
+              type="email"
               fullWidth
               variant="standard"
             />
             <TextField
               margin="dense"
-              id="email4SignUp"
-              label="Email Address"
-              type="email"
+              id="password4SignUp"
+              label="Password"
+              type="password"
               fullWidth
               variant="standard"
             />
