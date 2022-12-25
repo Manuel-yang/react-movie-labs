@@ -182,8 +182,12 @@ export const searchMovieApi = (movieName) => {
 };
 
 export const userRegister = async (username, password, email) => {
-  console.log(process.env.REACT_APP_BASE_URL)
   await requester.post("users?action=register", {username, password, email}).then(function (response) {
-    console.log(response);
+    // console.log(response);
   })
+}
+
+export const userLogin = async (username, password) => {
+  let reuslt = await requester.post("users", {username, password})
+  return reuslt
 }

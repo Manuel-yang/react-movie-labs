@@ -1,4 +1,4 @@
-import  React from 'react';
+import  React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from "react-router-dom";
-import { searchMovieApi, userRegister } from '../../api/tmdb-api'
+import { searchMovieApi, userRegister, userLogin } from '../../api/tmdb-api'
 import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
 import DirectionsIcon from '@mui/icons-material/Directions';
@@ -31,9 +31,17 @@ import DialogTitle from '@mui/material/DialogTitle';
 function DrawerAppBar() {
   const options = ['Sign up', 'Login'];
   const navigate = useNavigate();
-  // const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  // const [movieOnSearch, setMovieOnSearch] = useState([])
+  const existingToken = localStorage.getItem("token")
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authToken, setAuthToken] = useState(existingToken);
+  const [userName, setUserName] = useState("");
+
+    //Function to put JWT token in local storage.
+    const setToken = (data) => {
+      localStorage.setItem("token", data);
+      setAuthToken(data);
+    }
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -65,15 +73,26 @@ function DrawerAppBar() {
     }
   };
 
-  const handleSubmit4Login = () => {
-    const email = document.getElementById("email4Login").value
+  const handleSubmit4Login = async () => {
+    const username = document.getElementById("username4Login").value
     const password = document.getElementById("password4Login").value
-    if(email && password) {
-      console.log(email)
-      console.log(password)
+    if(username && password) {
+      let result = await userLogin(username, password)
+      if(result.data.token) {
+        console.log(result.data.token)
+        setToken(result.data.token);
+        setIsAuthenticated(true);
+        setUserName(username)
+      }
       setOpen4Login(false);
     }
   };
+
+  const userLogOut = () => {
+    setToken("")
+    setIsAuthenticated(false)
+    setUserName("")
+  }
 
   const handleClose4SignUp = () => {
     setOpen4SignUp(false);
@@ -82,6 +101,8 @@ function DrawerAppBar() {
   const handleClose4Login = () => {
     setOpen4Login(false);
   }
+
+
 
 const menuOptions = [
   { label: "Home", path: "/"},
@@ -195,6 +216,7 @@ const menuOptions = [
                 onClick={handleToggle}
               >
                 <AccountCircleIcon />
+                <p style={{ margin: "0.5rem"}}>{userName ? userName : ''}</p>
               </Button>
             </ButtonGroup>
             <Popper
@@ -218,7 +240,7 @@ const menuOptions = [
                   <Paper>
                     <ClickAwayListener onClickAway={handleClose}>
                       <MenuList id="split-button-menu" autoFocusItem>
-                        {options.map((option, index) => (
+                        {userName ? <MenuItem onClick={userLogOut}>Log out</MenuItem> : options.map((option, index) => (
                           <MenuItem
                             key={option}
                             onClick={(event) => handleMenuItemClick(event, index)}
@@ -285,9 +307,9 @@ const menuOptions = [
             </DialogContentText>
             <TextField
               margin="dense"
-              id="email4Login"
-              label="Email Address"
-              type="email"
+              id="username4Login"
+              label="Username"
+              type="name"
               fullWidth
               variant="standard"
             />
