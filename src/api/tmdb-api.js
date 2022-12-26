@@ -193,6 +193,7 @@ export const userLogin = async (username, password) => {
 }
 
 export const getUserInfo = async (id) => {
-  let reuslt = await requester.get(`users?id=${id}`)
-  return reuslt.data
+  const token = localStorage.getItem("userToken")
+  let result = await requester.post("users/userInfo", {id, token})
+  return result.data
 }

@@ -97,6 +97,7 @@ function DrawerAppBar() {
           setIsAuthenticated(true);
           localStorage.setItem("username", username)
           localStorage.setItem("userId", result.data.userId)
+          localStorage.setItem("userToken", result.data.token)
           setUserName(username)
           setOpen4Login(false);
         }
@@ -111,7 +112,7 @@ function DrawerAppBar() {
     setToken("")
     setIsAuthenticated(false)
     setUserName("")
-    localStorage.setItem("username", '')
+    localStorage.clear()
   }
 
   const handleClose4SignUp = () => {

@@ -15,16 +15,14 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import { getUserInfo } from "../api/tmdb-api";
 const UserInfo = () => {
-
-  const [ userInfo, setUserInfo ] = useState([])
-
+  const userArr = ["username", "email"]
+  const [ userInfo, setUserInfo ] = useState({email: ''})
   useEffect(() => {
     const fetchData = async () => {
-      const userInfo = await getUserInfo(localStorage.getItem("userId"))
-      console.log(userInfo)
-      setUserInfo(userInfo)
+      const data = await getUserInfo(localStorage.getItem("userId"))
+      setUserInfo({...data})
     }
-
+    
     fetchData()
   }, [])
 
@@ -57,6 +55,11 @@ const UserInfo = () => {
                     </IconButton>
                   </Stack>
                 </CardActions>
+                <Stack>
+                  <Paper>
+                    <p>Email {userInfo.email}</p>
+                  </Paper>
+                </Stack>
               </Card>
             </Grid>
             <Grid item xs={8}>
@@ -66,42 +69,20 @@ const UserInfo = () => {
                     style={{ width: "95%", margin: "1rem"}}
                     id="outlined-required"
                     label="Username"
-                    defaultValue={localStorage.getItem("username")}
                   />
                 </Paper>
                 <Paper style={{ width: "100%"}}>
                   <TextField
                     style={{ width: "95%", margin: "1rem"}}
                     id="outlined-required"
-                    label="Email"
-                    defaultValue="Hello World"
+                    label="email"
                   />
                 </Paper>
                 <Paper style={{ width: "100%"}}>
                   <TextField
                     style={{ width: "95%", margin: "1rem"}}
-                    required
                     id="outlined-required"
-                    label="Required"
-                    defaultValue="Hello World"
-                  />
-                </Paper>
-                <Paper style={{ width: "100%"}}>
-                  <TextField
-                    style={{ width: "95%", margin: "1rem"}}
-                    required
-                    id="outlined-required"
-                    label="Required"
-                    defaultValue="Hello World"
-                  />
-                </Paper>
-                <Paper style={{ width: "100%"}}>
-                  <TextField
-                    style={{ width: "95%", margin: "1rem"}}
-                    required
-                    id="outlined-required"
-                    label="Required"
-                    defaultValue="Hello World"
+                    label="Password"
                   />
                 </Paper>
               </Stack>
