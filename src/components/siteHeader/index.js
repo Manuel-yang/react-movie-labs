@@ -91,10 +91,12 @@ function DrawerAppBar() {
     if(username && password) {
       try {
         let result = await userLogin(username, password)
+        console.log(result)
         if(result.data.token) {
           setToken(result.data.token);
           setIsAuthenticated(true);
           localStorage.setItem("username", username)
+          localStorage.setItem("userId", result.data.userId)
           setUserName(username)
           setOpen4Login(false);
         }

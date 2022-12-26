@@ -191,3 +191,8 @@ export const userLogin = async (username, password) => {
   let reuslt = await requester.post("users", {username, password})
   return reuslt
 }
+
+export const getUserInfo = async (id) => {
+  let reuslt = await requester.get(`users?id=${id}`)
+  return reuslt.data
+}
