@@ -1,5 +1,4 @@
 import React, { useState} from "react";
-import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -12,6 +11,7 @@ import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import Chip  from "@mui/material/Chip";
 import { Upload } from "upload-js";
+import { updateUserAvatar } from "../../api/tmdb-api";
 
 const UserInfoSite = (props) => {
   const [fileUrl, setFileUrl] = useState("")
@@ -23,6 +23,7 @@ const UserInfoSite = (props) => {
     const { fileUrl } = await upload.uploadFile(file, { onProgress });
     setProgress("")
     setFileUrl(fileUrl)
+    await updateUserAvatar(localStorage.getItem("userId"), localStorage.getItem("userToken"), fileUrl)
   }
   
   const onProgress = ({ progress }) => {
@@ -34,7 +35,7 @@ const UserInfoSite = (props) => {
         <CardMedia
           component="img"
           alt="avatar"
-          image={fileUrl? fileUrl: "https://i.328888.xyz/2022/12/27/UVdOp.jpeg"}
+          image={fileUrl? fileUrl: props.userInfo.avatar }
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
