@@ -208,3 +208,8 @@ export const updateUserProfile = async (id, token, username, email, password) =>
   let result = await requester.post("users/updateInfo", {id, token, username, email, password})
   return result
 }
+
+export const updateUserFavGenres= async (id, token, newFavGenres) => {
+  let result = await requester.post("users/updateGenres", {id, token, newFavGenres})
+  return result
+}

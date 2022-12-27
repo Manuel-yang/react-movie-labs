@@ -9,7 +9,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { updateUserProfile } from "../../api/tmdb-api";
+import { updateUserProfile, updateUserFavGenres } from "../../api/tmdb-api";
 import Alert from '@mui/material/Alert';
 const UserInfoBlock = (props) => {
   const [userName, setUserName] = useState("")
@@ -17,15 +17,38 @@ const UserInfoBlock = (props) => {
   const [password, setPassword] = useState("")
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+  const [newGenre, setNewGenre] = useState([])
 
   const updateUserInfo = async () => {
     setErrMsg("")
     setSuccessMsg("")
     try {
-      await updateUserProfile(localStorage.getItem("userId"), localStorage.getItem("userToken"), userName, email, password)
-      setSuccessMsg("Change successfully")
+      const id = localStorage.getItem("userId")
+      const token = localStorage.getItem("userToken")
+      if (newGenre) {
+        await updateUserFavGenres(id, token, newGenre)
+      }
+      if(userName || email || password) {
+        await updateUserProfile(id, token, userName, email, password)
+        setSuccessMsg("Change successfully")
+      }
     } catch (error) {
       setErrMsg(error.response.data.msg)
+    }
+    console.log(newGenre)
+  }
+
+  const handle4Genres = async (event, genre) => {
+    if (event.target.checked) {
+      setNewGenre([...newGenre, genre])
+    } else {
+      let arr = newGenre
+      arr.map((item, index) => {
+        if(item.id === genre.id) {
+          arr.splice(index, 1)
+         setNewGenre(arr)
+        }
+      })
     }
   }
   
@@ -73,7 +96,7 @@ const UserInfoBlock = (props) => {
           <Container maxWidth="lg">
             {props.genres.map((genre) => {
               return(
-                <FormControlLabel key={genre.id} control={<Checkbox />} label={genre.name} />
+                <FormControlLabel onChange={(event) => {handle4Genres(event, genre)}} key={genre.id} control={<Checkbox />} label={genre.name} />
               )
             })}
           </Container >
