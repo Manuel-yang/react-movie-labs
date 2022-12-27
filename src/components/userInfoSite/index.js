@@ -13,7 +13,7 @@ import Paper from '@mui/material/Paper';
 
 const UserInfoSite = (props) => {
   return(
-    <Grid item xs={4}>
+    <div>
       <Card sx={{ maxWidth: 345 }}>
         <CardMedia
           component="img"
@@ -43,7 +43,7 @@ const UserInfoSite = (props) => {
           </Paper>
         </Stack>
       </Card>
-    </Grid>
+    </div>
   )
 }
 

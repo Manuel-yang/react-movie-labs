@@ -29,8 +29,12 @@ const UserInfo = () => {
       <Container maxWidth="lg">
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
-            <UserInfoSite userInfo={userInfo}/>
-            <UserInfoBlock genres={genres}/>
+            <Grid item xs={4}>
+              <UserInfoSite userInfo={userInfo}/>
+            </Grid>
+            <Grid item xs={8}>
+              <UserInfoBlock genres={genres}/>
+            </Grid>
           </Grid>
         </Box>
       </Container>

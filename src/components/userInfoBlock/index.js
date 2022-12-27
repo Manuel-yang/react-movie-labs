@@ -12,7 +12,7 @@ import TextField from '@mui/material/TextField';
 const UserInfoBlock = (props) => {
   
   return(
-    <Grid item xs={8}>
+    <div>
       <Stack>
         <Paper style={{ width: "100%"}}>
           <TextField
@@ -48,7 +48,7 @@ const UserInfoBlock = (props) => {
           </Container >
         </FormGroup>
       </Box>
-    </Grid>
+  </div>
   )
 }
 
