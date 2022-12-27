@@ -12,6 +12,7 @@ import Paper from '@mui/material/Paper';
 import Chip  from "@mui/material/Chip";
 import { Upload } from "upload-js";
 import { updateUserAvatar } from "../../api/tmdb-api";
+import EmailIcon from '@mui/icons-material/Email';
 
 const UserInfoSite = (props) => {
   const [fileUrl, setFileUrl] = useState("")
@@ -38,14 +39,14 @@ const UserInfoSite = (props) => {
           image={fileUrl? fileUrl: props.userInfo.avatar }
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography textAlign="center" gutterBottom variant="h5" component="div">
             {localStorage.getItem("username")}
           </Typography>
         </CardContent>
         <h2>{uploadprogress? "Uploading "+uploadprogress+"%":""}</h2>
-        <CardActions>
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <Button onChange={onFileSelected} variant="contained" component="label">
+
+          <Stack direction="row" justifyContent="center" alignItems="center">
+            <Button style={{margin: "0.5rem"}} onChange={onFileSelected} variant="contained" component="label">
               Upload
               <input hidden accept="image/*" multiple type="file" />
             </Button>
@@ -54,10 +55,13 @@ const UserInfoSite = (props) => {
               <PhotoCamera />
             </IconButton>
           </Stack>
-        </CardActions>
+
         <Stack>
           <Paper>
-            <p>Email {props.userInfo.email}</p>
+            <Stack justifyContent="center" alignItems="center" direction="row">
+              <EmailIcon />
+              <p style={{margin:"0.5rem"}}>Email {props.userInfo.email}</p>
+            </Stack>
           </Paper>
           <Paper>
             <h3>Genres you like</h3>
