@@ -203,3 +203,8 @@ export const getGenresApi = async () => {
   let result = await requester.get("genres")
   return result.data
 }
+
+export const updateUserProfile = async (id, token, username, email, password) => {
+  let result = await requester.post("users/updateInfo", {id, token, username, email, password})
+  return result
+}

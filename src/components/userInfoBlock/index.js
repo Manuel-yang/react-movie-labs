@@ -1,24 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
-
+import Button from '@mui/material/Button';
+import { updateUserProfile } from "../../api/tmdb-api";
+import Alert from '@mui/material/Alert';
 const UserInfoBlock = (props) => {
+  const [userName, setUserName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [errMsg, setErrMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+
+  const updateUserInfo = async () => {
+    setErrMsg("")
+    setSuccessMsg("")
+    try {
+      await updateUserProfile(localStorage.getItem("userId"), localStorage.getItem("userToken"), userName, email, password)
+      setSuccessMsg("Change successfully")
+    } catch (error) {
+      setErrMsg(error.response.data.msg)
+    }
+  }
   
   return(
-    <div>
+    <React.Fragment>
       <Stack>
         <Paper style={{ width: "100%"}}>
           <TextField
             style={{ width: "95%", margin: "1rem"}}
             id="outlined-required"
             label="Username"
+            onChange={(event) => {setUserName(event.target.value)}}
           />
         </Paper>
         <Paper style={{ width: "100%"}}>
@@ -26,6 +45,7 @@ const UserInfoBlock = (props) => {
             style={{ width: "95%", margin: "1rem"}}
             id="outlined-required"
             label="email"
+            onChange={(event) => {setEmail(event.target.value)}}
           />
         </Paper>
         <Paper style={{ width: "100%"}}>
@@ -33,7 +53,18 @@ const UserInfoBlock = (props) => {
             style={{ width: "95%", margin: "1rem"}}
             id="outlined-required"
             label="Password"
+            onChange={(event) => {setPassword(event.target.value)}}
           />
+        </Paper>
+        <Paper style={{ width: "100%"}}>
+          <Stack sx={{ width: '100%' }} spacing={2}> 
+              {errMsg ? <Alert severity="error">{errMsg}</Alert> : ""}
+          </Stack>
+        </Paper>
+        <Paper style={{ width: "100%"}}>
+          <Stack sx={{ width: '100%' }} spacing={2}> 
+              {successMsg ? <Alert severity="success">{successMsg}</Alert> : ""}
+          </Stack>
         </Paper>
       </Stack>
       <Box style={{margin: "1rem"}}>
@@ -48,7 +79,17 @@ const UserInfoBlock = (props) => {
           </Container >
         </FormGroup>
       </Box>
-  </div>
+      <Container style={{width: "100%"}}>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Button variant="contained">Reset</Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button variant="contained" onClick={updateUserInfo}>Submit</Button>
+          </Grid>
+        </Grid>
+      </Container>
+  </React.Fragment>
   )
 }
 
