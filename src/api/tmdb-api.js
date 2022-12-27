@@ -197,3 +197,9 @@ export const getUserInfo = async (id) => {
   let result = await requester.post("users/userInfo", {id, token})
   return result.data
 }
+
+export const getGenresApi = async () => {
+  // const token = localStorage.getItem("userToken")
+  let result = await requester.get("genres")
+  return result.data
+}

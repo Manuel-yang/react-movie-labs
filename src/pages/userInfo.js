@@ -12,19 +12,26 @@ import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
-import TextField from '@mui/material/TextField';
-import { getUserInfo } from "../api/tmdb-api";
+import { getUserInfo, getGenresApi } from "../api/tmdb-api";
+import UserInfoBlock from '../components/userInfoBlock/index'
+
+
 const UserInfo = () => {
   const userArr = ["username", "email"]
   const [ userInfo, setUserInfo ] = useState({email: ''})
+  const [ genres, setGenres ] = useState([])
   useEffect(() => {
     const fetchData = async () => {
       const data = await getUserInfo(localStorage.getItem("userId"))
+      const genres = await getGenresApi()
       setUserInfo({...data})
+      setGenres(genres.data.genres)
     }
     
     fetchData()
   }, [])
+
+  console.log(genres)
 
   return(
     <React.Fragment>
@@ -62,31 +69,7 @@ const UserInfo = () => {
                 </Stack>
               </Card>
             </Grid>
-            <Grid item xs={8}>
-              <Stack>
-                <Paper style={{ width: "100%"}}>
-                  <TextField
-                    style={{ width: "95%", margin: "1rem"}}
-                    id="outlined-required"
-                    label="Username"
-                  />
-                </Paper>
-                <Paper style={{ width: "100%"}}>
-                  <TextField
-                    style={{ width: "95%", margin: "1rem"}}
-                    id="outlined-required"
-                    label="email"
-                  />
-                </Paper>
-                <Paper style={{ width: "100%"}}>
-                  <TextField
-                    style={{ width: "95%", margin: "1rem"}}
-                    id="outlined-required"
-                    label="Password"
-                  />
-                </Paper>
-              </Stack>
-            </Grid>
+            <UserInfoBlock genres={genres}/>
           </Grid>
         </Box>
       </Container>
