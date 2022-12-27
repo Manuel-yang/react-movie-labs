@@ -195,6 +195,7 @@ export const userLogin = async (username, password) => {
 export const getUserInfo = async (id) => {
   const token = localStorage.getItem("userToken")
   let result = await requester.post("users/userInfo", {id, token})
+  console.log(result.data)
   return result.data
 }
 

@@ -27,6 +27,7 @@ const UserInfoBlock = (props) => {
       const token = localStorage.getItem("userToken")
       if (newGenre) {
         await updateUserFavGenres(id, token, newGenre)
+        window.location.reload()
       }
       if(userName || email || password) {
         await updateUserProfile(id, token, userName, email, password)

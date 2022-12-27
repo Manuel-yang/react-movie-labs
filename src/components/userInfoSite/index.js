@@ -10,6 +10,8 @@ import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
+import Chip  from "@mui/material/Chip";
+import { Container } from "postcss";
 
 const UserInfoSite = (props) => {
   return(
@@ -40,6 +42,14 @@ const UserInfoSite = (props) => {
         <Stack>
           <Paper>
             <p>Email {props.userInfo.email}</p>
+          </Paper>
+          <Paper>
+            <h3>Genres you like</h3>
+              {props.userInfo.favGenres ? (props.userInfo.favGenres).map((genre) => {
+                  return(
+                    <Chip style={{margin: "0.3rem"}} key={genre.id} label={genre.name} color="primary" />
+                  )
+                }): ""}
           </Paper>
         </Stack>
       </Card>
