@@ -5,10 +5,11 @@ import Grid from '@mui/material/Grid';
 import { getUserInfo, getGenresApi } from "../api/tmdb-api";
 import UserInfoBlock from '../components/userInfoBlock/index'
 import UserInfoSite from '../components/userInfoSite/index'
+import SimilarMovie from '../components/similarMovie/index'
 
 
 const UserInfo = () => {
-  const userArr = ["username", "email"]
+  // const userArr = ["username", "email"]
   const [ userInfo, setUserInfo ] = useState({email: ''})
   const [ genres, setGenres ] = useState([])
   useEffect(() => {
@@ -22,18 +23,21 @@ const UserInfo = () => {
     fetchData()
   }, [])
 
-  console.log(genres)
+  // console.log(genres)
 
   return(
     <React.Fragment>
       <Container maxWidth="lg">
         <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
+          <Grid container >
+            <Grid item xs={3}>
               <UserInfoSite userInfo={userInfo}/>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={6}>
               <UserInfoBlock userInfo={userInfo} genres={genres}/>
+            </Grid>
+            <Grid item xs={3}>
+              {userInfo.favourites ? <SimilarMovie userInfo={userInfo} /> : ""}
             </Grid>
           </Grid>
         </Box>

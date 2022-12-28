@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react";
-import { getMovieById } from "../../api/tmdb-api";
+import React, {useState, useEffect} from "react"
+import { getSimilarMovie } from "../../api/tmdb-api"
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
@@ -9,26 +9,27 @@ import CardMedia from '@mui/material/CardMedia';
 import { Stack } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 
-const FavMovieCard = (props) => {
+const SimilarMovie = (props) => {
   const navigate = useNavigate();
   let favouritesIdList = props.userInfo.favourites
   const [movieList, setMovieList] = useState([])
 
   useEffect(() => {
     favouritesIdList.map(async (id) => {
-      let newMovie = await getMovieById(id)
-      setMovieList(current => [...current, newMovie])
+      let similarMovie = await getSimilarMovie(id)
+      setMovieList(current => [...current, similarMovie.results[0]])
     })
-  },[])
 
+  },[])
+  
   const handelMenuSelect = (pageURL) => {
     navigate(pageURL, { replace: true});
     // console.log(pageURL)
   }
-  // console.log(movieList)
+
   return(
     <React.Fragment>
-      <h1 >Your favourite movies</h1>
+      <h1 >You may like</h1>
       <Stack>
         {movieList ? 
           movieList.map((movie) => {
@@ -61,4 +62,4 @@ const FavMovieCard = (props) => {
   )
 }
 
-export default FavMovieCard
+export default SimilarMovie

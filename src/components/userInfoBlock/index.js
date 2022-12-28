@@ -9,7 +9,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { updateUserProfile, updateUserFavGenres, getMovieById } from "../../api/tmdb-api";
+import { updateUserProfile, updateUserFavGenres } from "../../api/tmdb-api";
 import Alert from '@mui/material/Alert';
 import FavMovieCard from "../favMovieCard";
 const UserInfoBlock = (props) => {
