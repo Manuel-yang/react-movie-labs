@@ -9,8 +9,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { updateUserProfile, updateUserFavGenres } from "../../api/tmdb-api";
+import { updateUserProfile, updateUserFavGenres, getMovieById } from "../../api/tmdb-api";
 import Alert from '@mui/material/Alert';
+import FavMovieCard from "../favMovieCard";
 const UserInfoBlock = (props) => {
   const [userName, setUserName] = useState("")
   const [email, setEmail] = useState("")
@@ -52,6 +53,8 @@ const UserInfoBlock = (props) => {
       })
     }
   }
+
+
   
   return(
     <React.Fragment>
@@ -113,6 +116,16 @@ const UserInfoBlock = (props) => {
           </Grid>
         </Grid>
       </Container>
+      <Paper>
+        {/* {props.userInfo.favourites ? (props.userInfo.favourites).map(async (id) => {
+          console.log(await getMovieById(id))
+          return(
+            <p key={id}>{id}</p>
+          )
+        }): ""} */}
+        {props.userInfo.favourites ? <FavMovieCard userInfo={props.userInfo}/> : ""}
+        
+      </Paper>
   </React.Fragment>
   )
 }

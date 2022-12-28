@@ -17,7 +17,7 @@ export const getMovies = (page) => {
 };
 
 export const getMovie = (args) => {
-  // console.log(args)
+  console.log(args)
   const [, idPart] = args.queryKey;
   const { id } = idPart;
   return fetch(
@@ -224,3 +224,17 @@ export const updateUserFavMovies = async (id, token, movieId) => {
   let result = await requester.post("users/updateFavMovies", {id, token, movieId})
   return result
 }
+
+export const getMovieById = (id) => {
+  return fetch(
+    `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}`
+  ).then((response) => {
+    if (!response.ok) {
+      throw new Error(response.json().message);
+    }
+    return response.json();
+  })
+  .catch((error) => {
+    throw error
+ });
+};

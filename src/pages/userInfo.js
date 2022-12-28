@@ -33,7 +33,7 @@ const UserInfo = () => {
               <UserInfoSite userInfo={userInfo}/>
             </Grid>
             <Grid item xs={8}>
-              <UserInfoBlock genres={genres}/>
+              <UserInfoBlock userInfo={userInfo} genres={genres}/>
             </Grid>
           </Grid>
         </Box>
