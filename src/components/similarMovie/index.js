@@ -20,7 +20,7 @@ const SimilarMovie = (props) => {
       setMovieList(current => [...current, similarMovie.results[0]])
     })
 
-  },[])
+  },[favouritesIdList])
   
   const handelMenuSelect = (pageURL) => {
     navigate(pageURL, { replace: true});

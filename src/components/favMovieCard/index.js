@@ -19,7 +19,7 @@ const FavMovieCard = (props) => {
       let newMovie = await getMovieById(id)
       setMovieList(current => [...current, newMovie])
     })
-  },[])
+  },[favouritesIdList])
 
   const handelMenuSelect = (pageURL) => {
     navigate(pageURL, { replace: true});

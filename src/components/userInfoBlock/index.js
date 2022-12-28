@@ -45,7 +45,7 @@ const UserInfoBlock = (props) => {
       setNewGenre([...newGenre, genre])
     } else {
       let arr = newGenre
-      arr.map((item, index) => {
+      arr.forEach((item, index) => {
         if(item.id === genre.id) {
           arr.splice(index, 1)
          setNewGenre(arr)
