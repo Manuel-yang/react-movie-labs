@@ -2,7 +2,7 @@
 
 Website: [https://react-movie-lab.netlify.app](https://react-movie-lab.netlify.app/)
 
-
+Youtube: https://youtu.be/IuHTYySbTQ8
 
 ## Appbar
 
@@ -149,3 +149,332 @@ This block displays the movies that the actor acted in the past
 Click the "Learn more" button under the card, it will navigate you to the movie detail page
 
 ![image-20221110135910197](README.assets/image-20221110135910197.png)
+
+
+
+
+
+# Log in/ Sign up
+
+Click the icon on the right top corner
+
+![image-20221228202943337](README.assets/image-20221228202943337.png)
+
+
+
+The Sign-up dialog will pop up after you click the sign up button
+
+Input the username, valid email address and password
+
+![image-20221228203021590](README.assets/image-20221228203021590.png)
+
+
+
+Otherwise, the dialog will show you the error
+
+![image-20221228203210766](README.assets/image-20221228203210766.png)
+
+![image-20221228203143002](README.assets/image-20221228203143002.png)
+
+
+
+After user log in, frontend will store the userId and userToken
+
+![image-20221228203347970](README.assets/image-20221228203347970.png)
+
+
+
+After clicking the Log out button, the local storage will be cleared
+
+![image-20221228203457470](README.assets/image-20221228203457470.png)
+
+
+
+Click Account info will navigate the user to the user profile page
+
+![image-20221228203408516](README.assets/image-20221228203408516.png)
+
+
+
+# User Info Page
+
+Users can reset account's username, email address and the password
+
+![image-20221228203704020](README.assets/image-20221228203704020.png)
+
+
+
+Upload user's new avatar
+
+![image-20221228203743958](README.assets/image-20221228203743958.png)
+
+
+
+Choose the genres that user may like
+
+![image-20221228203804625](README.assets/image-20221228203804625.png)
+
+
+
+The user profile site will show the genres after choosing
+
+![image-20221228203901125](README.assets/image-20221228203901125.png)
+
+
+
+After clicking the heart icon and go back to the user info page
+
+![image-20221228203939666](README.assets/image-20221228203939666.png)
+
+
+
+Movies that the user likes will be recorded and shown at the bottom
+
+And the website will recommend the movies similar or relate to the movies that users favourite
+
+![image-20221228204028476](README.assets/image-20221228204028476.png)
+
+
+
+Password will be stored after encrypting
+
+![image-20221228204247027](README.assets/image-20221228204247027.png)
+
+
+
+# Backend
+
+Backend will verify the user token and userId when the frontend wants to access the backend api
+
+![image-20221228204410976](README.assets/image-20221228204410976.png)
+
+![image-20221228204422415](README.assets/image-20221228204422415.png)
+
+# Setup requirements
+
+In this project, NPM is used to manage the packages. Use `npm install` to install all the dependencies
+
+Dotenv is used to manage the Api key. Create a `.env` file under root folder and input Api key in it. Add it into `.gitignore` to ignore this file when uploading
+
+```plaintext
+REACT_APP_TMDB_KEY=<APIkey>
+FAST_REFRESH=<boolean>
+```
+
+
+
+### Command
+
+- `npm run start:ci`: Start e2e testing
+- `npm run start:component`: Start component testing
+- `npm run start`: Start the project
+- `npm run build`: Bundle the project
+
+# E2E Test
+
+- ### Base tests
+
+  - The Discover Movies page
+    - displays the page header and 20 movies
+    - displays the correct movie titles
+    - after scroll to the bottom of the page, it should have 40 movies
+  - The movie details page
+    - displays the movie title, overview and genres
+    - displays the movie status, original language, Popularity, Runtime, Revenue, Budge
+    - displays the movie keyword
+    - displays the series cast
+    - displays the review about the movie
+
+- ### ActorDetail
+
+  - The actor details page
+    - displays the actor profile site
+    - displays the actor name and biography
+    - displays the movies that actor involved
+
+- ### Favourites
+
+  - The favourites feature
+    - selected movie card shows the red heart
+  - The favourites page
+    - only the tagged movies are listed
+
+- ### Filtering
+
+  - By movie genre
+    - show movies with the selected genre
+
+- ### Navigation
+
+  - From the home page to a movie's details
+    - navigates to the movie details page and change browser URL
+  - use search will navigate to the movie's deatils
+    - navigates to the movie details page through search
+  - input invalid movie's name
+    - should catch the error
+  - navigation should navigate to different page
+    - should navigate to facourite page after click favourite link
+
+- ### Upcoming tests
+
+  - The upcoming page
+    - displays the page header and 20 movies
+    - displays the correct movie titles
+
+## Error/Exception
+
+In this project, I use the structure below to handle the error
+
+```plaintext
+cy.on("uncaught:exception", () => {
+	.....
+	if(err.message.includes("...")) {
+		throw new Error("....")
+	}
+})
+```
+
+
+
+## Cypress Custom commands
+
+Code below is used to immitate user press "enter" and search bar will navigate user to the movie detail page
+
+```plaintext
+Cypress.Commands.add('enter', () => {
+  cy.get("#searchIcon").click()
+})
+```
+
+
+
+# Component testing
+
+- SiteHeader.cy.js
+  - contain logo name
+  - can input info in search bar
+  - click home button
+  - click favourites button
+  - click upcoming button
+
+# Branch
+
+- basic-ci-config
+- caching-in-ci
+- cypress4actorDetail
+- cypress4homePage
+- cypress4moviedetail
+- demobranch
+- develop (important)
+  - commit in develop branch
+- main (important)
+  - merge develop branch to main branch
+- master
+- tests-in-ci
+
+# Pipeline
+
+Stages contains:
+
+- install (main/develop)
+- build (main/develop)
+- test (main)
+  - e2e-test
+  - component-test
+
+```plaintext
+image: node:latest
+
+# Pipeline
+stages:
+  - install
+  - build
+  # - exercise_job
+  - test
+
+....
+
+
+# Jobs 
+install_dependencies:
+  stage: install
+  script:
+    - npm ci --cache .npm --prefer-offline
+  artifacts:
+    paths:
+      - node_modules/
+
+bundle_app:
+  stage: build
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - build/
+
+# exercise_job:
+#   stage: exercise_job
+#   only:
+#     - main
+#   script:
+#     - echo "New job for exercise"
+
+e2etest:
+# Node docker image with Cypress and Chrome pre-installed
+  image: cypress/browsers:node12.14.1-chrome85-ff81
+  stage: test
+  only:
+    - main
+  script:
+    - echo "Run tests in headless mode"
+    - npm run start:ci
+    
+
+test4component:
+# Node docker image with Cypress and Chrome pre-installed
+  image: cypress/browsers:node12.14.1-chrome85-ff81
+  stage: test
+  only:
+    - main
+  script:
+    - echo "Run tests for component"
+    - npm run start:component
+
+....
+```
+
+
+
+# Continuous Integration
+
+**Website**: [https://react-movie-lab.netlify.app](https://react-movie-lab.netlify.app/)
+
+Netify are used in project to implement the auto-deployment(main)
+
+# Bundling & Code splitting
+
+`lazy` and `Suspense` are used in pages to load in parallel
+
+```jsx
+import React, {useState, useEffect, lazy, Suspense} from "react";
+...
+const AcotrProfile = lazy(() => import('../components/actorProfile'))
+const ActorProfileSite = lazy(() => import('../components/actorProfileSite'))
+...
+  return(
+    <>
+      <Container>
+        <Grid container >
+          <Suspense>
+            <Grid item xs={4}>
+              <ActorProfileSite details={details}/>
+            </Grid>
+            <Grid item xs={8}>
+              <AcotrProfile details={details} combinedCredits={combinedCredits}/>
+            </Grid>
+          </Suspense>
+        </Grid>
+      </Container>
+    </>
+  )
+```
