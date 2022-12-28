@@ -219,3 +219,8 @@ export const updateUserAvatar= async (id, token, avatarUrl) => {
   let result = await requester.post("users/updateAvatar", {id, token, avatarUrl})
   return result
 }
+
+export const updateUserFavMovies = async (id, token, movieId) => {
+  let result = await requester.post("users/updateFavMovies", {id, token, movieId})
+  return result
+}
