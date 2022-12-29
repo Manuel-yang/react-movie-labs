@@ -62,7 +62,7 @@ const UserInfoBlock = (props) => {
         <Paper style={{ width: "100%"}}>
           <TextField
             style={{ width: "95%", margin: "1rem"}}
-            id="outlined-required"
+            id="usernameInput"
             label="Username"
             onChange={(event) => {setUserName(event.target.value)}}
           />
@@ -70,7 +70,7 @@ const UserInfoBlock = (props) => {
         <Paper style={{ width: "100%"}}>
           <TextField
             style={{ width: "95%", margin: "1rem"}}
-            id="outlined-required"
+            id="emailInput"
             label="email"
             onChange={(event) => {setEmail(event.target.value)}}
           />
@@ -78,7 +78,7 @@ const UserInfoBlock = (props) => {
         <Paper style={{ width: "100%"}}>
           <TextField
             style={{ width: "95%", margin: "1rem"}}
-            id="outlined-required"
+            id="passwordInput"
             label="Password"
             onChange={(event) => {setPassword(event.target.value)}}
           />

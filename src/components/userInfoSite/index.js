@@ -60,7 +60,10 @@ const UserInfoSite = (props) => {
           <Paper>
             <Stack justifyContent="center" alignItems="center" direction="row">
               <EmailIcon />
-              <p style={{margin:"0.5rem"}}>Email {props.userInfo.email}</p>
+              <p style={{margin:"0.5rem"}}>
+                <span >Email : </span>
+                <span id="userEmail">{props.userInfo.email}</span>
+              </p>
             </Stack>
           </Paper>
           <Paper>
