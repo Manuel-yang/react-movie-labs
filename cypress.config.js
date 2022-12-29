@@ -4,7 +4,7 @@ module.exports = defineConfig({
   video: false,
 
   e2e: {
-    baseUrl: "http://localhost:3000/",
+    baseUrl: "http://localhost:3001/",
     viewportWidth: 1980,
     viewportHeight: 1080,
     setupNodeEvents(on, config) {
