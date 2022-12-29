@@ -225,6 +225,11 @@ export const updateUserFavMovies = async (id, token, movieId) => {
   return result
 }
 
+export const resetUserFavGenres = async (id, token, movieId) => {
+  let result = await requester.post("users/resetFavGenres", {id, token, movieId})
+  return result
+}
+
 export const getMovieById = (id) => {
   return fetch(
     `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}`

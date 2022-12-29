@@ -9,7 +9,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { updateUserProfile, updateUserFavGenres } from "../../api/tmdb-api";
+import { updateUserProfile, updateUserFavGenres, resetUserFavGenres } from "../../api/tmdb-api";
 import Alert from '@mui/material/Alert';
 import FavMovieCard from "../favMovieCard";
 const UserInfoBlock = (props) => {
@@ -20,12 +20,13 @@ const UserInfoBlock = (props) => {
   const [successMsg, setSuccessMsg] = useState("");
   const [newGenre, setNewGenre] = useState([])
 
+  const id = localStorage.getItem("userId")
+  const token = localStorage.getItem("userToken")
+
   const updateUserInfo = async () => {
     setErrMsg("")
     setSuccessMsg("")
     try {
-      const id = localStorage.getItem("userId")
-      const token = localStorage.getItem("userToken")
       if (newGenre) {
         await updateUserFavGenres(id, token, newGenre)
         window.location.reload()
@@ -52,6 +53,11 @@ const UserInfoBlock = (props) => {
         }
       })
     }
+  }
+
+  const resetFavGenres= async () => {
+    await resetUserFavGenres(id, token)
+    window.location.reload()
   }
 
 
@@ -109,14 +115,14 @@ const UserInfoBlock = (props) => {
       <Container style={{width: "100%"}}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <Button variant="contained">Reset</Button>
+            <Button onClick={resetFavGenres} variant="contained">Reset</Button>
           </Grid>
           <Grid item xs={6}>
             <Button variant="contained" onClick={updateUserInfo}>Submit</Button>
           </Grid>
         </Grid>
       </Container>
-      <Paper>
+      <Paper id="favMovies">
         {/* {props.userInfo.favourites ? (props.userInfo.favourites).map(async (id) => {
           console.log(await getMovieById(id))
           return(

@@ -30,7 +30,7 @@ const SimilarMovie = (props) => {
   return(
     <React.Fragment>
       <h1 >You may like</h1>
-      <Stack>
+      <Stack id="similarMovies">
         {movieList ? 
           movieList.map((movie) => {
           return(
