@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import { updateUserProfile, updateUserFavGenres, resetUserFavGenres } from "../../api/tmdb-api";
 import Alert from '@mui/material/Alert';
 import FavMovieCard from "../favMovieCard";
+import { useNavigate } from "react-router-dom";
 const UserInfoBlock = (props) => {
   const [userName, setUserName] = useState("")
   const [email, setEmail] = useState("")
@@ -19,7 +20,7 @@ const UserInfoBlock = (props) => {
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [newGenre, setNewGenre] = useState([])
-
+  const navigate = useNavigate();
   const id = localStorage.getItem("userId")
   const token = localStorage.getItem("userToken")
 
@@ -27,18 +28,22 @@ const UserInfoBlock = (props) => {
     setErrMsg("")
     setSuccessMsg("")
     try {
-      if (newGenre) {
+      if (newGenre[0] != null) {
         await updateUserFavGenres(id, token, newGenre)
         window.location.reload()
       }
       if(userName || email || password) {
+        console.log(userName, email, password)
         await updateUserProfile(id, token, userName, email, password)
         setSuccessMsg("Change successfully")
       }
     } catch (error) {
       setErrMsg(error.response.data.msg)
     }
-    console.log(newGenre)
+  }
+
+  const handelMenuSelect = (pageURL) => {
+    navigate(pageURL, { replace: true});
   }
 
   const handle4Genres = async (event, genre) => {

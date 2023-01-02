@@ -48,7 +48,9 @@ describe("Base tests", () => {
     });
 
     it("after scroll to the bottom of the page, it should have 40 movies", () => {
-      cy.scrollTo("bottom", { easing: 'linear' , duration: 5000})
+      cy.wait(2000)
+      cy.scrollTo(0, 5000)
+      cy.wait(3000)
       cy.get(".MuiCardHeader-root").should("have.length", 40);
     })
   });
@@ -93,6 +95,7 @@ describe("Base tests", () => {
       cy.visit(`/movies/${movies[0].id}`);
     });
     it(" displays the movie title, overview and genres and ", () => {
+      cy.wait(2000)
       cy.get("p").contains(movie.title);
       cy.get("p").contains("Overview");
       cy.get("p").contains(movie.overview);

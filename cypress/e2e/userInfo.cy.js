@@ -18,8 +18,9 @@ describe("Test for account info page", () => {
       cy.get("button").contains("Subscribe").click()
       cy.get('[data-testid="AccountCircleIcon"]').click()
       cy.get("li").contains("Account info").click().then(() => {
+        cy.wait(2000)
         cy.get("div").contains(username)
-        cy.wait(1000)
+        cy.wait(2000)
         cy.get("#userEmail").contains(email)
       })
     })
@@ -39,12 +40,13 @@ describe("Test for account info page", () => {
         cy.get("#username4Login").type("YanAemons3")
         cy.get("#password4Login").type(password)
         cy.get("button").contains("Subscribe").click()
+        cy.wait(2000)
         cy.get("div").contains("YanAemons3")
         cy.get('[data-testid="AccountCircleIcon"]').click()
         cy.get("li").contains("Account info").click()
         cy.get("#usernameInput").type("YanAemons4")
         cy.get("button").contains("Submit").click()
-        cy.wait(1000)
+        cy.wait(2000)
       })
 
 
@@ -58,6 +60,7 @@ describe("Test for account info page", () => {
       cy.get("li").contains("Account info").click()
       cy.get("#emailInput").type("aslifasdfasd@qq.com")
       cy.get("button").contains("Submit").click().then(() => {
+        cy.wait(2000)
         cy.visit("/")
         cy.get('[data-testid="AccountCircleIcon"]').click()
         cy.get("li").contains("Log out").click()
@@ -66,12 +69,13 @@ describe("Test for account info page", () => {
         cy.get("#username4Login").type(username)
         cy.get("#password4Login").type(password)
         cy.get("button").contains("Subscribe").click()
+        cy.wait(2000)
         cy.get('[data-testid="AccountCircleIcon"]').click()
         cy.get("li").contains("Account info").click()
         cy.get("#userEmail").contains("aslifasdfasd@qq.com")
         cy.get("#emailInput").type(email)
         cy.get("button").contains("Submit").click()
-        cy.wait(1000)
+        cy.wait(2000)
       })
   })
 
@@ -84,6 +88,7 @@ describe("Test for account info page", () => {
   cy.get("li").contains("Account info").click()
   cy.get("#passwordInput").type("yangyimeng2")
   cy.get("button").contains("Submit").click().then(() => {
+    cy.wait(2000)
     cy.visit("/")
     cy.get('[data-testid="AccountCircleIcon"]').click()
     cy.get("li").contains("Log out").click()
@@ -96,7 +101,7 @@ describe("Test for account info page", () => {
     cy.get("li").contains("Account info").click()
     cy.get("#passwordInput").type("yangyimeng1")
     cy.get("button").contains("Submit").click()
-    cy.wait(1000)
+    cy.wait(2000)
   })
 
 })
@@ -116,11 +121,12 @@ describe("Test for account info page", () => {
       cy.get(".PrivateSwitchBase-input").eq(0).click()
       cy.get(".PrivateSwitchBase-input").eq(1).click()
       cy.get("button").contains("Submit").click().then(() => {
+        cy.wait(2000)
         cy.get(".MuiChip-label").contains("Action")
         cy.get(".MuiChip-label").contains("Adventure")
       })
       cy.get("button").contains("Reset").click()
-      cy.wait(1000)
+      cy.wait(2000)
     })
   })
 
@@ -162,11 +168,12 @@ describe("Test for account info page", () => {
         .then((response) => {
           movies = response.results;
           cy.request(
-            `https://api.themoviedb.org/3/movie/${movies[1].id}/similar?api_key=${Cypress.env("TMDB_KEY")}&language=en-US&page=1"`
+            `https://api.themoviedb.org/3/movie/${movies[1].id}/similar?api_key=${Cypress.env("TMDB_KEY")}&language=en-US&page=1`
           )
           .its("body")
           .then((response) => {
             similarMovies = response.results
+            console.log(similarMovies)
           })
         });
     });
@@ -176,6 +183,7 @@ describe("Test for account info page", () => {
       cy.get("button").contains("Subscribe").click()
       cy.get('[data-testid="AccountCircleIcon"]').click()
       cy.get("li").contains("Account info").click()
+      cy.wait(2000)
       cy.get("#similarMovies").find(".MuiTypography-root").contains(similarMovies[0].title)
     })
   })

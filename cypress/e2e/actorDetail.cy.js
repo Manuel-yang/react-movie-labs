@@ -92,6 +92,7 @@ describe("The actor details page", () => {
 
     it("displays the actor name and biography", () => {
       let curActor = CurActor
+      cy.wait(2000)
       cy.get('p').contains(curActor.name)
       cy.get('p').contains("Biography")
       cy.get('p').contains(formatNumber(curActor.biography))
