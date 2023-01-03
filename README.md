@@ -6,6 +6,22 @@ Youtube: https://youtu.be/IuHTYySbTQ8
 
 Backend: https://react-lab-backend.herokuapp.com/
 
+
+
+# API
+
+## Swagger
+
+Under swagger file folder
+
+eg:
+
+![image-20230103183609738](README.assets/image-20230103183609738.png)
+
+
+
+# Frontend
+
 ## Appbar
 
 I change the siteHeader into the Appbar through the API below
